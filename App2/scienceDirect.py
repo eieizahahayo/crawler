@@ -27,7 +27,7 @@ def scienceDirect(input,aut):
         filename = "scienceDirect" + input + ".csv"
         f = open(filename,"w",encoding="utf-16")
         now = datetime.datetime.now()
-        f.write("Keyword:," + input + "\nDatabase:,https://www.sciencedirect.com\nDate:" + str(now.isoformat()) +"\n\n")
+        f.write("Keyword:," + input + "\nDatabase:,https://www.sciencedirect.com\nDate:," + str(now.isoformat()) +"\n\n")
         f.write("S.No,Research Title,Journal Name,Volume and Date of publication,Keywords,Doi number,Author name,Affiliation,Email ID\n")
         for each in body:
             links.append(each['href'])
@@ -46,7 +46,7 @@ def scienceDirect(input,aut):
         filename = "scienceDirect" + input + "By"+ aut + ".csv"
         f = open(filename,"w",encoding="utf-16")
         now = datetime.datetime.now()
-        f.write("Keyword:," + input + "\nDatabase:,https://www.sciencedirect.com\nDate:" + str(now.isoformat()) +"\n")
+        f.write("Keyword:," + input + "\nDatabase:,https://www.sciencedirect.com\nDate:," + str(now.isoformat()) +"\n")
         f.write("S.No,Research Title,Journal Name,Volume and Date of publication,Keywords,Doi number,Author name,Affiliation,Email ID\n")
         for each in body:
             links.append(each['href'])
@@ -154,7 +154,7 @@ def crawInfoScienceDirect(input,f,count):
                         f.write("Cannot get DOI\n")
                     #-------------------------------------------------------------
                 else:
-                    f.write(",,,,"+temp2[i].text+"\n")
+                    f.write(",,,," + temp2[i].text + "\n")
         except Exception as e:
             continue
     if(alreadyDone == False):
