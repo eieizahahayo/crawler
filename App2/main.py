@@ -6,8 +6,9 @@ import datetime
 from arxiv import *
 from scienceDirect import *
 from wiley import *
+from springer import *
 
-print('[1] : arXiv\n[2] : ScienceDirect\n[3] : Wiley')
+print('[1] : arXiv\n[2] : ScienceDirect\n[3] : Wiley\n[4] : Springer')
 choice = input("Enter your choice : ")
 if(choice == "1"):
     key = input('Enter the keyword : ')
@@ -19,3 +20,6 @@ elif(choice == "2"):
 elif(choice == "3"):
     key = input("Enter the keyword : ")
     wiley(key)
+elif(choice == "4"):
+    key = input("Enter the keyword : ")
+    springer(key)
