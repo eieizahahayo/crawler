@@ -9,10 +9,21 @@ def replace_all(text, wordDict):
         text = text.replace(key, wordDict[key])
     return text
 
+def contact(input):
+    # div author-info accordion-tabbed__content - div big
+    # p author-type - address
+    # div bottom-info - contact info
+    headers = {
+        'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'}
+    response = requests.get(input, headers=headers)
+    page = soup(response.content, "html5lib")
+    body = page.findAll("div",{"class":"item__body"})
+
+
 #-------------------------------------------------arXiv------------------------------------------------------------------------------
 def wiley(input):
     counter = 1
-    filename = "Wiley " + input + ".csv"
+    filename = "Wiley_" + input.replace(" ","_") + ".csv"
     f = open(filename,"w",encoding="utf-16")
     print("enter Wiley\n----------------------------------------------------------")
     for i in range(0,999999):
@@ -20,13 +31,13 @@ def wiley(input):
             print("Page : " + str(i))
             headers = {
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'}
-            my_url = 'https://onlinelibrary.wiley.com/action/doSearch?AllField=' + input.replace(" ","+")
+            my_url = 'https://onlinelibrary.wiley.com/action/doSearch?AllField=' + input.replace(" ","+") + '&startPage=&PubType=journal'
             response = requests.get(my_url, headers=headers)
             page = soup(response.content, "html5lib")
             body = page.findAll("div",{"class":"item__body"})
             now = datetime.datetime.now()
             f.write("Keyword:," + input + "\nDatabase:,https://onlinelibrary.wiley.com/\nDate:," + str(now.isoformat()) +"\n\n")
-            header = "S.No,Research Title,Journal Name,Volume,Date,Doi number,Authors\n"
+            header = "S.No,Research Title,Journal Name,Volume,Date,Doi number,Author name,Address,Email\n"
             f.write(header)
             for each in body:
                 link = each.h2.span.a['href']
@@ -36,33 +47,34 @@ def wiley(input):
                 doi = each.h2.span.a['href']
                 re = {"\n":"" , ",":" "}
 
+                #--------------S.No----------------------------------------------
                 print("link : " + link)
                 f.write(str(counter) + " || " + link + ",")
+
+                #--------------Title----------------------------------------------
                 print("Title : " + title)
                 f.write(replace_all(title,re) + ",")
-                arr = [{"class":"meta__serial meta__book"},{"class":"meta__serial"}]
-                done = False
-                for each in arr:
-                    try:
-                        if(done):
-                            break
-                        book = info.find("a",each).text
-                        print("Book : " + book)
-                        f.write(replace_all(book,re) + ",,")
-                        done = True
-                    except:
-                        continue
-                if(done == False):
-                    book = info.find("a",{"class":"meta__serial"}).text
+
+                #--------------Book----------------------------------------------
+                book = info.find("a",{"class":"meta__serial"}).text
+                print("Book : " + book)
+                f.write(replace_all(book,re) + ",")
+                try:
                     vol = info.find("a",{"class":"meta__volume"}).text
-                    print("Book : " + book)
-                    f.write(replace_all(book,re) + ",")
                     print("Volume : " + vol)
                     f.write(replace_all(vol,re) + ",")
+                except Exception as e:
+                    print("Exception volume : " + str(e))
+                    f.write("Cannot get volume,")
+                #--------------Date----------------------------------------------
                 print("Date : " + date)
                 f.write(replace_all(date,re) + ",")
-                print("Doi : " + doi)
-                f.write(replace_all(doi,re) + ",")
+
+                #--------------Doi----------------------------------------------
+                print("Doi : https://nph.onlinelibrary.wiley.com" + doi)
+                f.write("https://nph.onlinelibrary.wiley.com" + replace_all(doi,re) + ",")
+
+                #--------------Authors----------------------------------------------
                 print("Authors : " + info.ul.text)
                 if(info.ul.text == ""):
                     f.write("\n")
@@ -82,7 +94,7 @@ def wiley(input):
             try:
                 headers = {
                     'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'}
-                my_url = 'https://onlinelibrary.wiley.com/action/doSearch?AllField=' + input.replace(" ","%20") + '&startPage=' + str(i)
+                my_url = 'https://onlinelibrary.wiley.com/action/doSearch?AllField=' + input.replace(" ","%20") + '&startPage=' + str(i) + '&PubType=journal'
                 response = requests.get(my_url, headers=headers)
                 page = soup(response.content, "html5lib")
                 body = page.findAll("div",{"class":"item__body"})
@@ -97,33 +109,35 @@ def wiley(input):
                     doi = each.h2.span.a['href']
                     re = {"\n":"" , ",":" "}
 
+                    #--------------S.No----------------------------------------------
                     print("link : " + link)
                     f.write(str(counter) + " || " + link + ",")
+
+                    #--------------Title----------------------------------------------
                     print("Title : " + title)
                     f.write(replace_all(title,re) + ",")
-                    arr = [{"class":"meta__serial meta__book"},{"class":"meta__serial"}]
-                    done = False
-                    for each in arr:
-                        try:
-                            if(done == True):
-                                break
-                            book = info.find("a",each).text
-                            print("Book : " + book)
-                            f.write(replace_all(book,re) + ",,")
-                            done = True
-                        except:
-                            continue
-                    if(done == False):
-                        book = info.find("a",{"class":"meta__serial"}).text
+
+                    #--------------Book----------------------------------------------
+                    book = info.find("a",{"class":"meta__serial"}).text
+                    print("Book : " + book)
+                    f.write(replace_all(book,re) + ",")
+                    try:
                         vol = info.find("a",{"class":"meta__volume"}).text
-                        print("Book : " + book)
-                        f.write(replace_all(book,re) + ",")
                         print("Volume : " + vol)
                         f.write(replace_all(vol,re) + ",")
+                    except Exception as e:
+                        print("Exception volume : " + str(e))
+                        f.write("Cannot get volume,")
+
+                    #--------------Date----------------------------------------------
                     print("Date : " + date)
                     f.write(replace_all(date,re) + ",")
-                    print("Doi : " + doi)
-                    f.write(replace_all(doi,re) + ",")
+
+                    #--------------Doi----------------------------------------------
+                    print("Doi : https://nph.onlinelibrary.wiley.com" + doi)
+                    f.write("https://nph.onlinelibrary.wiley.com" + replace_all(doi,re) + ",")
+
+                    #--------------Authors----------------------------------------------
                     print("Authors : " + info.ul.text)
                     if(info.ul.text == ""):
                         f.write("\n")
@@ -141,7 +155,6 @@ def wiley(input):
                     stop = False
                 if(stop):
                     break
-
             except Exception as e:
                 print("Exception : " + str(e))
                 print("Page : " + str(i))
