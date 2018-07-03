@@ -24,7 +24,7 @@ def scienceDirect(input,aut):
         page = soup(response.content, "html5lib")
         body = page.findAll("a",{"class":"result-list-title-link u-font-serif text-s"})
         links = []
-        filename = "scienceDirect" + input + ".csv"
+        filename = "scienceDirect_" + input.replace(" ","_") + ".csv"
         f = open(filename,"w",encoding="utf-16")
         now = datetime.datetime.now()
         f.write("Keyword:," + input + "\nDatabase:,https://www.sciencedirect.com\nDate:," + str(now.isoformat()) +"\n\n")

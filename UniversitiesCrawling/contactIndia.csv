@@ -1,35 +1,137 @@
 https://www.angrau.ac.in/ContactAssociateDeans.php
-name,email,phone
-="Faculty of AgriculturalEngineering & Technology"& CHAR(10) &"Faculty ofAgriculture"& CHAR(10) &"Faculty ofHomeScience"
-="Financial Profile"& CHAR(10) &"Dr. D. Lokanatha Reddy"& CHAR(10) &"Dr. P. Ramesh Babu"& CHAR(10) &"Dr. P.V. Krishnaiah"& CHAR(10) &"Dr. B. Narendra "& CHAR(10) &"Dr. G.V. Nageswara Rao"& CHAR(10) &"Dr. A. Mani"& CHAR(10) &"Dr. C. Ramana"& CHAR(10) &"Dr. D. Vishnu Shankar Rao"& CHAR(10) &"Dr. S. Kaleemullah"& CHAR(10) &"Dr. L. Uma Devi"& CHAR(10) &"Dr. K. L. Narasimha Rao"& CHAR(10) &"Dr. I. Bhavani Devi"& CHAR(10) &"Dr.    ChellaSubba Reddy "& CHAR(10) &"Dr.    V. Sankara Rao "& CHAR(10) &"Dr.    P. Gidda Reddy "& CHAR(10) &"Dr.    G. Narasimha Rao "& CHAR(10) &"Dr.    D. K. Sarkar "& CHAR(10) &"Dr. K. srinivasa Rao ",="Email"& CHAR(10) &"agadbpt@gmail.com"& CHAR(10) &"adsvac2009@yahoo. com"& CHAR(10) &"associatedeannaira@gmail.com"& CHAR(10) &"agcmnd@gmail.com"& CHAR(10) &"adagcrjy@gmail.com"& CHAR(10) &"caebpt@gmail.com"& CHAR(10) &"caemdks@gmail.com"& CHAR(10) &"foodsciencebapatla@gmail.com"& CHAR(10) &"cfstpvdl@gmail.com"& CHAR(10) &"chsc.guntur@gmail.com"& CHAR(10) &"apgc.angrau@gmail"& CHAR(10) &"iabm.angrau@gmail.com"& CHAR(10) &"jcdreducationalsociety2016@gmail.com"& CHAR(10) &"kbragcollege@gmail.com"& CHAR(10) &"ad.sbvrag@sbvr.in"& CHAR(10) &"skagricollege@gmail.com"& CHAR(10) &"vesagri@gmail.com"& CHAR(10) &"nsagriculturalcollege@gmail.com"& CHAR(10) &"rithesh@sbvr.in"& CHAR(10) &"sbvrag@sbvr.in"& CHAR(10) &"@gmail.com",="99896 25203"& CHAR(10) &"99896 25206"& CHAR(10) &"9490324776"& CHAR(10) &"83747 29292"& CHAR(10) &"9849061351"& CHAR(10) &"99896 25205"& CHAR(10) &"77023 66113"& CHAR(10) &"9989625204"& CHAR(10) &"91777 76692"& CHAR(10) &"80089 87132"& CHAR(10) &"72079 11999"& CHAR(10) &"9440121074"& CHAR(10) &"9848705492"& CHAR(10) &"      9848782008 "& CHAR(10) &"9848143770 "& CHAR(10) &"9949400666"& CHAR(10) &"      9000180037 "& CHAR(10) &"8886630032"& CHAR(10) &"      8688810055 "& CHAR(10) &"9440149708"& CHAR(10) &"      9440252894 "& CHAR(10) &"9949993668 "& CHAR(10) &"9849891276"& CHAR(10) &"      9966074844 "& CHAR(10) &"      9100033960 "& CHAR(10) &"      8688810055 "& CHAR(10) &"9440252894 "
+email,name,phone
+Email,="Financial Profile"& CHAR(10) &"Dr. D. Lokanatha Reddy"& CHAR(10) &"Dr. P. Ramesh Babu"& CHAR(10) &"Dr. P.V. Krishnaiah"& CHAR(10) &"Dr. B. Narendra "& CHAR(10) &"Dr. G.V. Nageswara Rao"& CHAR(10) &"Dr. A. Mani"& CHAR(10) &"Dr. C. Ramana"& CHAR(10) &"Dr. D. Vishnu Shankar Rao"& CHAR(10) &"Dr. S. Kaleemullah"& CHAR(10) &"Dr. L. Uma Devi"& CHAR(10) &"Dr. K. L. Narasimha Rao"& CHAR(10) &"Dr. I. Bhavani Devi"& CHAR(10) &"Dr.    ChellaSubba Reddy "& CHAR(10) &"Dr.    V. Sankara Rao "& CHAR(10) &"Dr.    P. Gidda Reddy "& CHAR(10) &"Dr.    G. Narasimha Rao "& CHAR(10) &"Dr.    D. K. Sarkar "& CHAR(10) &"Dr. K. srinivasa Rao ",="99896 25203"& CHAR(10) &"99896 25206"& CHAR(10) &"9490324776"& CHAR(10) &"83747 29292"& CHAR(10) &"9849061351"& CHAR(10) &"99896 25205"& CHAR(10) &"77023 66113"& CHAR(10) &"9989625204"& CHAR(10) &"91777 76692"& CHAR(10) &"80089 87132"& CHAR(10) &"72079 11999"& CHAR(10) &"9440121074"& CHAR(10) &"9848705492"& CHAR(10) &"      9848782008 "& CHAR(10) &"9848143770 "& CHAR(10) &"9949400666"& CHAR(10) &"      9000180037 "& CHAR(10) &"8886630032"& CHAR(10) &"      8688810055 "& CHAR(10) &"9440149708"& CHAR(10) &"      9440252894 "& CHAR(10) &"9949993668 "& CHAR(10) &"9849891276"& CHAR(10) &"      9966074844 "& CHAR(10) &"      9100033960 "& CHAR(10) &"      8688810055 "& CHAR(10) &"9440252894 "
+agadbpt@gmail.com
+adsvac2009@yahoo. com
+associatedeannaira@gmail.com
+agcmnd@gmail.com
+adagcrjy@gmail.com
+caebpt@gmail.com
+caemdks@gmail.com
+foodsciencebapatla@gmail.com
+cfstpvdl@gmail.com
+chsc.guntur@gmail.com
+apgc.angrau@gmail
+iabm.angrau@gmail.com
+jcdreducationalsociety2016@gmail.com
+kbragcollege@gmail.com
+ad.sbvrag@sbvr.in
+skagricollege@gmail.com
+vesagri@gmail.com
+nsagriculturalcollege@gmail.com
+rithesh@sbvr.in
+sbvrag@sbvr.in
+@gmail.com
 
 http://www.aau.in/college-menu/department/faculty/751
-name,email,phone
-="Dean Agriculture Faculty"& CHAR(10) &"Dean Faculty of Agricultural Engineering & Technology"& CHAR(10) &"Dean of Veterinary Faculty"& CHAR(10) &"Dean Faculty of Agricultural Information Technology"& CHAR(10) &"Dean Faculty of Food Processing and Bio-energy"& CHAR(10) &"Dean Faculty of International Agribusiness Management"& CHAR(10) &"Faculty of Post Graduate"& CHAR(10) &"Faculty of Agriculture"& CHAR(10) &"Faculty of Veterinary Science & Animal Husbandry"& CHAR(10) &"Faculty of Dairy Science"& CHAR(10) &"Faculty of Agricultural Information Technology"& CHAR(10) &"Faculty of Agricultural Engineering & Technology"& CHAR(10) &"Faculty of Food Processing Technology and Bio-Energy"& CHAR(10) &"FACULTY OF INTERNATIONAL AGRIBUSINESS MANAGEMENT"& CHAR(10) &"Agriculture & Co-operation Department - Government of Gujarat"& CHAR(10) &"Finance Department Govt. of Gujarat "& CHAR(10) &"General Administration Department Govt. of Gujarat"& CHAR(10) &"Department of Agricultural Research And Education Govt. of India"& CHAR(10) &"Department of Science & Technology Govt. of Gujarat"& CHAR(10) &"Genetics and Plant Breeding - (Department Faculty)"
-=" Dr. Sasidharan N."& CHAR(10) &" : Professor and Head"& CHAR(10) &" Dr. D. A. Patel"& CHAR(10) &" : Associate Professor"& CHAR(10) &" Dr. Sneha Macwana"& CHAR(10) &" Dr. Arna Das"& CHAR(10) &" : Assistant Professor",="AAU Mail "& CHAR(10) &"Open E-Mail ID in aau.in"& CHAR(10) &"Email: sasidharanneetiyath@gmail.com"& CHAR(10) &"Email: dapatel237@aau.in  / dapatel237@gmail.com"& CHAR(10) &"Email: sneha@aau.in /  sneha271@gmail.com"& CHAR(10) &" E-mail: arna_das@aau.in"& CHAR(10) &"e-mail:"& CHAR(10) &"chavadharirm99@aau.in",="Mo.09173860690"& CHAR(10) &"Mo.09426394258"& CHAR(10) &"Mo.09601277283"
+email,name,phone
+AAU Mail ,=" Dr. Sasidharan N."& CHAR(10) &" : Professor and Head"& CHAR(10) &" Dr. D. A. Patel"& CHAR(10) &" : Associate Professor"& CHAR(10) &" Dr. Sneha Macwana"& CHAR(10) &" Dr. Arna Das"& CHAR(10) &" : Assistant Professor",="Mo.09173860690"& CHAR(10) &"Mo.09426394258"& CHAR(10) &"Mo.09601277283"
+Open E-Mail ID in aau.in
+Email: sasidharanneetiyath@gmail.com
+Email: dapatel237@aau.in  / dapatel237@gmail.com
+Email: sneha@aau.in /  sneha271@gmail.com
+ E-mail: arna_das@aau.in
+e-mail:
+chavadharirm99@aau.in
 
 http://www.annamalaiuniversity.ac.in/H01_info.php?dc=H01
-name,email,phone
-="Faculty of Agriculture"& CHAR(10) &" Faculty Members"& CHAR(10) &" Faculty of Agriculture "
-=,="                        E-mail :  "& CHAR(10) &"hdagronomy78@gmail.com",="                        Tel Number: 04144-238451 (Ext. 305)"& CHAR(10) &"                        Fax Number : 04144-238080"
+email,name,phone
+                        E-mail :  ,=,="                        Tel Number: 04144-238451 (Ext. 305)"& CHAR(10) &"                        Fax Number : 04144-238080"
+hdagronomy78@gmail.com
 
 http://bausabour.com/department_details.aspx?deptcode=Horticulture%20(Fruit%20and%20Fruit%20Technology)
-name,email,phone
-="Department"& CHAR(10) &"About Department"& CHAR(10) &"Mandate of the Department"
-=,="registrar.bau.sabour@gmail.com                                        ",="0641-2452604"& CHAR(10) &" 2452606"& CHAR(10) &"0641-2452614                                        "
+email,name,phone
+registrar.bau.sabour@gmail.com                                        ,=,="0641-2452604"& CHAR(10) &" 2452606"& CHAR(10) &"0641-2452614                                        "
 
 http://www.bckv.edu.in/contact_us.php
-name,email,phone
-="Faculty of Agriculture"& CHAR(10) &"Faculty of Horticulture"& CHAR(10) &"Faculty of Agricultural Engineering"& CHAR(10) &"DEAN FACULTY OF AGRICULTURE"& CHAR(10) &"DEAN FACULTY OF HORTICULTURE"& CHAR(10) &"DEAN FACULTY OF AGRIL. ENGINEERING"& CHAR(10) &"ASSISTANT DIRECTOR OF FARMS (Sl.Gr) FACULTY OF HORTICULTURE"& CHAR(10) &"SECRETARY FACULTY COUNCIL FACULTY OF AGRICULTURE"& CHAR(10) &"SECRETARY FACULTY COUNCIL FACULTY OF HORTICULTURE "& CHAR(10) &"SECRETARY FACULTY COUNCIL FACULTY OF AG. ENGINEERING"
-="Patent received by Prof.J.P.Gupta"& CHAR(10) &"Dr. Dharani Dhar Patra"& CHAR(10) &"Dr.Dipak Kumar Ghosh "& CHAR(10) &"Prof. Srikanta Das "& CHAR(10) &"Dr. Apurba Bandyopadhyay"& CHAR(10) &"Prof. Jagdamba Prased Gupta "& CHAR(10) &"Dr. Srikumar Pal "& CHAR(10) &"Dr. Sudhibrata Mitra"& CHAR(10) &"Dr.Partha Sarathi Nath "& CHAR(10) &"Prof. Ranjit Kumar Biswas "& CHAR(10) &"Dr. Gautam Chakraborty "& CHAR(10) &"Dr. Kankan Kumar Chowdhury"& CHAR(10) &"Dr. Sumana Roy"& CHAR(10) &"Dr. Biswajit Bhattacharya "& CHAR(10) &"Dr. Kalyan Jana "& CHAR(10) &"Prof. A. Debnath "& CHAR(10) &"Prof. Jayanta Saha "& CHAR(10) &"Dr. Fatik Kumar Bauri "& CHAR(10) &"Dr. Kuntal Chakravarty",="WebMail"& CHAR(10) &"EMAIL"& CHAR(10) &"bckvvc@gmail.com "& CHAR(10) &" vc@bckv.edu.in"& CHAR(10) &"regbckv@gmail.com"& CHAR(10) &"                registrar@bckv.edu.in "& CHAR(10) &"comptroller.bckv@gmail.com"& CHAR(10) &"                pal.gat21@gmail.com"& CHAR(10) &"                comptroller@bckv.edu.in"& CHAR(10) &"deanofag.bckv@gmail.com"& CHAR(10) &"            sridas_bckv@rediffmail.com "& CHAR(10) &" deanagri@bckv.edu.in"& CHAR(10) &"dhort.bckv@gmail.com "& CHAR(10) &"                 apurbabandyopadhyay@yahoo.com "& CHAR(10) &" deanhorti@bckv.edu.in"& CHAR(10) &"jpgupta_bckv@yahoo.co.in "& CHAR(10) &"jpgupta@mail.com "& CHAR(10) &"             deanaengg@bckv.edu.in"& CHAR(10) &"bckvdr@gmail.com"& CHAR(10) &" dr@bckv.edu.in                "& CHAR(10) &"dfbckv@gmail.com            "& CHAR(10) &" df@bckv.edu.in"& CHAR(10) &"deebckv@gmail.com "& CHAR(10) &" parthasarathinath57@gmail.com "& CHAR(10) &"                dee@bckv.edu.in "& CHAR(10) &"rkbckv@rediffmail.com "& CHAR(10) &"                 deanpgsbckv1974@gmail.com                deanpg@bckv.edu.in "& CHAR(10) &"entogautam@gmail.com "& CHAR(10) &"deansw@bckv.edu.in"& CHAR(10) &"librarian@bckv.edu.in"& CHAR(10) &"librarian.bckv@gmail.com"& CHAR(10) &"deputylibrarian@bckv.edu.in "& CHAR(10) &"dlbckv@gmail.com"& CHAR(10) &"sroy612@gmail.com "& CHAR(10) &" dydr@bckv.edu.in"& CHAR(10) &"biswajitbckv05@gmail.com "& CHAR(10) &" adf@bckv.edu.in"& CHAR(10) &"koushik1335@gmail.com "& CHAR(10) &" amo@bckv.edu.in"& CHAR(10) &"ar1@bckv.edu.in"& CHAR(10) &"kjanarrs@gmail.com "& CHAR(10) &" ar2@bckv.edu.in"& CHAR(10) &"surojitsahachowdhury@gmail.com "& CHAR(10) &" ar3@bckv.edu.in"& CHAR(10) &"bckvsod@gmail.com "& CHAR(10) &" sod@bckv.edu.in"& CHAR(10) &"acbckv@gmail.com "& CHAR(10) &" ac1@bckv.edu.in"& CHAR(10) &"ukkar72@gmail.com "& CHAR(10) &" security@bckv.edu.in"& CHAR(10) &"ghoshasim.bckv@gmail.com "& CHAR(10) &"engineer@bckv.edu.in "& CHAR(10) &" sahajayanta100@gmail.com "& CHAR(10) &"secagrifc@bckv.edu.in "& CHAR(10) &"fmpr.bauri@gmail.com "& CHAR(10) &" sechortfc@bckv.edu.in"& CHAR(10) &"pkdhara9@yahoo.in "& CHAR(10) &"secenggfc@bckv.edu.in"& CHAR(10) &"chakravarty.kuntal3@gmail.com"& CHAR(10) &" se@bckv.edu.in",="03473-223259"& CHAR(10) &"(033)-2580-8511"& CHAR(10) &"(033)-2582-8407"& CHAR(10) &"033-2587-9772(O)"& CHAR(10) &"033-2587-8163"& CHAR(10) &"033-2587-8338"& CHAR(10) &"Mob:9433024018"& CHAR(10) &"(033)-2587-6048"& CHAR(10) &"(033)-2587-0523"& CHAR(10) &"                (033)-2582-0465"& CHAR(10) &"09474175649"& CHAR(10) &"033-2587 7677"& CHAR(10) &"033-2582-3948"& CHAR(10) &"03473-222269 "& CHAR(10) &" 03473-223256-59"& CHAR(10) &"09433164218"& CHAR(10) &"09433678461"& CHAR(10) &"9474337834"
+email,name,phone
+WebMail,="Patent received by Prof.J.P.Gupta"& CHAR(10) &"Dr. Dharani Dhar Patra"& CHAR(10) &"Dr.Dipak Kumar Ghosh "& CHAR(10) &"Prof. Srikanta Das "& CHAR(10) &"Dr. Apurba Bandyopadhyay"& CHAR(10) &"Prof. Jagdamba Prased Gupta "& CHAR(10) &"Dr. Srikumar Pal "& CHAR(10) &"Dr. Sudhibrata Mitra"& CHAR(10) &"Dr.Partha Sarathi Nath "& CHAR(10) &"Prof. Ranjit Kumar Biswas "& CHAR(10) &"Dr. Gautam Chakraborty "& CHAR(10) &"Dr. Kankan Kumar Chowdhury"& CHAR(10) &"Dr. Sumana Roy"& CHAR(10) &"Dr. Biswajit Bhattacharya "& CHAR(10) &"Dr. Kalyan Jana "& CHAR(10) &"Prof. A. Debnath "& CHAR(10) &"Prof. Jayanta Saha "& CHAR(10) &"Dr. Fatik Kumar Bauri "& CHAR(10) &"Dr. Kuntal Chakravarty",="03473-223259"& CHAR(10) &"(033)-2580-8511"& CHAR(10) &"(033)-2582-8407"& CHAR(10) &"033-2587-9772(O)"& CHAR(10) &"033-2587-8163"& CHAR(10) &"033-2587-8338"& CHAR(10) &"Mob:9433024018"& CHAR(10) &"(033)-2587-6048"& CHAR(10) &"(033)-2587-0523"& CHAR(10) &"                (033)-2582-0465"& CHAR(10) &"033-2587 7677"& CHAR(10) &"033-2582-3948"& CHAR(10) &"03473-222269 "& CHAR(10) &" 03473-223256-59"& CHAR(10) &"09433164218"& CHAR(10) &"09433678461"& CHAR(10) &"9474337834"
+EMAIL
+bckvvc@gmail.com 
+ vc@bckv.edu.in
+regbckv@gmail.com
+                registrar@bckv.edu.in 
+comptroller.bckv@gmail.com
+                pal.gat21@gmail.com
+                comptroller@bckv.edu.in
+deanofag.bckv@gmail.com
+            sridas_bckv@rediffmail.com 
+ deanagri@bckv.edu.in
+dhort.bckv@gmail.com 
+                 apurbabandyopadhyay@yahoo.com 
+ deanhorti@bckv.edu.in
+jpgupta_bckv@yahoo.co.in 
+jpgupta@mail.com 
+             deanaengg@bckv.edu.in
+bckvdr@gmail.com
+ dr@bckv.edu.in                
+dfbckv@gmail.com            
+ df@bckv.edu.in
+deebckv@gmail.com 
+ parthasarathinath57@gmail.com 
+                dee@bckv.edu.in 
+rkbckv@rediffmail.com 
+                 deanpgsbckv1974@gmail.com                deanpg@bckv.edu.in 
+entogautam@gmail.com 
+deansw@bckv.edu.in
+librarian@bckv.edu.in
+librarian.bckv@gmail.com
+deputylibrarian@bckv.edu.in 
+dlbckv@gmail.com
+sroy612@gmail.com 
+ dydr@bckv.edu.in
+biswajitbckv05@gmail.com 
+ adf@bckv.edu.in
+koushik1335@gmail.com 
+ amo@bckv.edu.in
+ar1@bckv.edu.in
+kjanarrs@gmail.com 
+ ar2@bckv.edu.in
+surojitsahachowdhury@gmail.com 
+ ar3@bckv.edu.in
+bckvsod@gmail.com 
+ sod@bckv.edu.in
+acbckv@gmail.com 
+ ac1@bckv.edu.in
+ukkar72@gmail.com 
+ security@bckv.edu.in
+ghoshasim.bckv@gmail.com 
+engineer@bckv.edu.in 
+ sahajayanta100@gmail.com 
+secagrifc@bckv.edu.in 
+fmpr.bauri@gmail.com 
+ sechortfc@bckv.edu.in
+pkdhara9@yahoo.in 
+secenggfc@bckv.edu.in
+chakravarty.kuntal3@gmail.com
+ se@bckv.edu.in
 
 http://www.bauranchi.org/colleges/college-of-bio-technology/message-from-dean/
-name,email,phone
-="Faculty of Agriculture"& CHAR(10) &"Departments"& CHAR(10) &"Faculty of Veterinary Science & Animal Husbandry"& CHAR(10) &"Faculty of Forestry"& CHAR(10) &"Faculty of Veterinary Science "& CHAR(10) &"Faculty Of Agriculture At A Glance"
-="Dr. Z. A. Haider",="Webmail"& CHAR(10) &"zahaider@bauranchi.org"& CHAR(10) &"zahaider56@yahoo.com"& CHAR(10) &"Latest @ BAU",="Phone No. 0651-2450789"
+email,name,phone
+Webmail,="Dr. Z. A. Haider",="Phone No. 0651-2450789"
+zahaider@bauranchi.org
+zahaider56@yahoo.com
+Latest @ BAU
 
 http://csauk.ac.in/college-of-agriculture/
-name,email,phone
-="List of Department"& CHAR(10) &"Name Of The Department"
-="Dr. Poonam Singh"& CHAR(10) &"Professor & Head/ Incharge"& CHAR(10) &" Dr. R.K Yadav"& CHAR(10) &" Dr. Madhu Bajpai"& CHAR(10) &" Dr. Rajendra Prashad"& CHAR(10) &" Dr. V.K. Singh"& CHAR(10) &" Dr. Karam Hussain"& CHAR(10) &" Dr. S.P. Singh"& CHAR(10) &" Dr. Lallu"& CHAR(10) &" Dr. D.R Singh"& CHAR(10) &" Dr. S.K Gupta"& CHAR(10) &" Dr. S.S. Yadav"& CHAR(10) &" Dr. Ved Ratan"& CHAR(10) &" Dr. C.L Maurya"& CHAR(10) &"Dr. R.P. Singh"& CHAR(10) &" Dr. R.P. Singh"& CHAR(10) &" Dr. R.C. Nigam",=" info@csauk.ac.in"& CHAR(10) &"E-mail"& CHAR(10) &"deanag@csauk.ac.in"& CHAR(10) &"hod.abm@csauk.ac.in"& CHAR(10) &"hod.agbio@csauk.ac.in"& CHAR(10) &"hod.agecostat@csauk.ac.in"& CHAR(10) &"hod.agext@csauk.ac.in"& CHAR(10) &"hod.agr@csauk.ac.in"& CHAR(10) &"hod.ahd@csauk.ac.in"& CHAR(10) &"hod.cp@csauk.ac.in"& CHAR(10) &"hod.ent@csauk.ac.in"& CHAR(10) &"hod.gpb@csauk.ac.in"& CHAR(10) &"hod.hor@csauk.ac.in"& CHAR(10) &"hod.pp@csauk.ac.in"& CHAR(10) &"hod.seedscience@csauk.ac.in"& CHAR(10) &"hod.scwm@csauk.ac.in"& CHAR(10) &"hod.forestry@csauk.ac.in"& CHAR(10) &"hod.sac@csauk.ac.in"& CHAR(10) &"Email",="0512- 2534155"
+email,name,phone
+ info@csauk.ac.in,="Dr. Poonam Singh"& CHAR(10) &"Professor & Head/ Incharge"& CHAR(10) &" Dr. R.K Yadav"& CHAR(10) &" Dr. Madhu Bajpai"& CHAR(10) &" Dr. Rajendra Prashad"& CHAR(10) &" Dr. V.K. Singh"& CHAR(10) &" Dr. Karam Hussain"& CHAR(10) &" Dr. S.P. Singh"& CHAR(10) &" Dr. Lallu"& CHAR(10) &" Dr. D.R Singh"& CHAR(10) &" Dr. S.K Gupta"& CHAR(10) &" Dr. S.S. Yadav"& CHAR(10) &" Dr. Ved Ratan"& CHAR(10) &" Dr. C.L Maurya"& CHAR(10) &"Dr. R.P. Singh"& CHAR(10) &" Dr. R.P. Singh"& CHAR(10) &" Dr. R.C. Nigam",="0512- 2534155"
+E-mail
+deanag@csauk.ac.in
+hod.abm@csauk.ac.in
+hod.agbio@csauk.ac.in
+hod.agecostat@csauk.ac.in
+hod.agext@csauk.ac.in
+hod.agr@csauk.ac.in
+hod.ahd@csauk.ac.in
+hod.cp@csauk.ac.in
+hod.ent@csauk.ac.in
+hod.gpb@csauk.ac.in
+hod.hor@csauk.ac.in
+hod.pp@csauk.ac.in
+hod.seedscience@csauk.ac.in
+hod.scwm@csauk.ac.in
+hod.forestry@csauk.ac.in
+hod.sac@csauk.ac.in
+Email
 
