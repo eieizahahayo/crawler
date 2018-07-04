@@ -7,8 +7,11 @@ from arxiv import *
 from scienceDirect import *
 from wiley import *
 from springer import *
+from sagepub import *
+from researchgate import *
+from europePMC import *
 
-print('[1] : arXiv\n[2] : ScienceDirect\n[3] : Wiley\n[4] : Springer')
+print('[1] : arXiv\n[2] : ScienceDirect\n[3] : Wiley\n[4] : Springer\n[5] : Sagepub\n[6] : Research gate\n[7] : Europe PMC')
 choice = input("Enter your choice : ")
 if(choice == "1"):
     key = input('Enter the keyword : ')
@@ -23,3 +26,12 @@ elif(choice == "3"):
 elif(choice == "4"):
     key = input("Enter the keyword : ")
     springer(key)
+elif(choice == "5"):
+    key = input("Enter the keyword : ")
+    sage(key)
+elif(choice == "6"):
+    key = input("Enter the keyword : ")
+    gate(key)
+elif(choice == "7"):
+    key = input("Enter the keyword : ")
+    pmc(key)

@@ -1,5 +1,6 @@
 import bs4
 import requests
+import xlsxwriter
 from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
 import datetime
@@ -9,48 +10,95 @@ def replace_all(text, wordDict):
         text = text.replace(key, wordDict[key])
     return text
 
-def crawInfo(input,f,count):
-    re = {"\n":"" , ",":" " , ";":" "}
-    ret = {"\n":"" , ",":"/" , ";":" "}
+def crawInfo(input,f,count,n):
     url = "https://link.springer.com" + input
     headers = {
         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'}
     response = requests.get(url, headers=headers)
     page = soup(response.content, "html5lib")
 
-    f.write(url + "\n")
+    #----------------------Initialization-----------------------------------------------------------------------------
+    # f.write(url + "\n")
+    f.write('A' + str(n) , url)
+    n += 1
     print(url)
-    header = "S.No,Journal Name,Volume,Date,Keywords,Doi number,Author name,E-mail,Affiliation\n"
-    f.write(header)
-    f.write(str(count) + ",")
+    header = "S.No,Title,Journal name,Volume,Date,Keywords,Doi number,Author name,E-mail,Affiliation\n"
+    f.write('A' + str(n) , 'S.No')
+    f.write('B' + str(n) , 'Title')
+    f.write('C' + str(n) , 'Journal name')
+    f.write('D' + str(n) , 'Volume')
+    f.write('E' + str(n) , 'Date')
+    f.write('F' + str(n) , 'Keywords')
+    f.write('G' + str(n) , 'Doi number')
+    f.write('H' + str(n) , 'Author name')
+    f.write('I' + str(n) , 'E-mail')
+    f.write('J' + str(n) , 'Affiliation')
+    n += 1
+    f.write('A' + str(n) , str(count))
 
-    title = page.find("h1",{"class":"ArticleTitle"})
-    print("Title : " + title.text)
-    f.write(replace_all(title.text,ret) + ",")
 
-    volume = page.find("p",{"class":"icon--meta-keyline-before"})
-    temp = volume.findAll("span")
-    vol = ""
-    for each in temp:
-        vol = vol + replace_all(each.text,re) + " | "
-    print(vol)
-    f.write(vol + ",")
+    #------------------------Title---------------------------------------------------------------------------
+    try:
+        title = page.find("h1",{"class":"ArticleTitle"})
+        print("Title : " + title.text)
+        f.write('B' + str(n) , title.text)
+    except Exception as e:
+        print("Cannot get title : " + str(e))
+        f.write('B' + str(n) , 'Cannot get title')
 
-    date = page.find("div",{"class":"main-context__column"})
-    print(date.div.text)
-    f.write(date.div.text + ",")
+    #------------------------Journal name---------------------------------------------------------------------------
+    try:
+        jname = page.find("span",{"class":"JournalTitle"})
+        print("Journal name : " + jname.text)
+        f.write('C' + str(n) , jname.text)
+    except Exception as e:
+        print("Cannot get journal name : " + str(e))
+        f.write('C' + str(n) , jname.text)
 
+    #--------------------------Volume-------------------------------------------------------------------------
+    try:
+        volume = page.find("p",{"class":"icon--meta-keyline-before"})
+        temp = volume.findAll("span")
+        vol = ""
+        for each in temp:
+            vol = vol + each.text + " | "
+        print(vol)
+        f.write('D' + str(n) , vol)
+    except Exception as e:
+        print("Cannot get volume : " + str(e))
+        f.write('D' + str(n) , 'Cannot get volume')
+
+    #------------------------Date---------------------------------------------------------------------------
+    try:
+        date = page.find("div",{"class":"main-context__column"})
+        print(date.div.text)
+        # f.write(date.div.text + ",")
+        f.write('E' + str(n) , date.div.text)
+    except Exception as e:
+        print("Cannot get date : " + str(e))
+        f.write('E' + str(n) , 'Cannot get date')
+
+    #------------------------Key words 1---------------------------------------------------------------------------
     try:
         keywords = page.findAll("span",{"class":"Keyword"})
-        f.write(keywords[0].text + ",")
     except Exception as e:
         print("Exception keywords : " + str(e))
-
-    doi = page.find("span",{"id" : "doi-url"})
-    print(doi.text)
-    f.write(doi.text + ",")
+        f.write('F' + str(n) , 'Cannot get keywords')
 
 
+    #----------------------Doi-----------------------------------------------------------------------------
+    try:
+        doi = page.find("span",{"id" : "doi-url"})
+        print(doi.text)
+        # f.write(doi.text + ",")
+        f.write('G' + str(n) , doi.text)
+    except Exception as e:
+        print("Exception doi : " + str(e))
+        f.write('G' + str(n) , 'Cannot get DOI number')
+
+    #---------------------Authors and email 1------------------------------------------------------------------------------
+    authorsArr = []
+    mailArr = []
     try:
         count = 1
         ul = page.findAll("ul",{"class":"test-contributor-names"})
@@ -59,40 +107,77 @@ def crawInfo(input,f,count):
             if(len(each.text) > 1):
                 name = each.span.text
                 num = each.ul.text
-                print("Authors : " + str(count) + ". " + name + " | " + num + ".")
+                print("Authors : " + name + " | " + num + ".")
+                authorsArr.append(name + " | " + num + ".")
                 try:
                     mail = each.find("a",{"class":"gtm-email-author"})
                     print("Email : " + mail['title'])
+                    mailArr.append(mail['title'])
                 except Exception as e:
                     print("Exception Email : " + str(e))
+                    mailArr.append("Email is not available")
                 count = count + 1
     except Exception as e:
         print("Exception authors : " + str(e))
+        authorsArr.append("Cannot get author information")
+        mailArr.append("Email is not available")
 
-
+    #-------------------Affiliation--------------------------------------------------------------------------------
+    affiArr = []
     try:
         ol = page.find("ol",{"class":"test-affiliations"})
         affi = ol.findAll("li")
         for each in affi:
             print("Affiliation : " + each.text)
+            affiArr.append(each.text)
     except Exception as e:
         print("Exception Affiliation : " + str(e))
+        affiArr.append("Cannot get affiliation")
 
-    for i in range(0,len(keywords)):
-        if(i == 0):
-            print("yo")
-        else:
-            print("Keywords : " + keywords[i].text)
-            f.write(",,,," + keywords[i].text + "\n")
+
+
+    # for i in range(0,len(keywords)):
+    #     if(i == 0):
+    #         f.write('E' + str(n) , keywords[i])
+    #     else:
+    #         print("Keywords : " + keywords[i].text)
+    #         f.write(",,,," + keywords[i].text + "\n")
+
+
+
+    maximum = max([len(keywords),len(authorsArr),len(mailArr)])
+    #------------------------Key words 2---------------------------------------------------------------------------
+    kn = n
+    for each in keywords:
+        f.write('F' + str(kn) , each.text)
+        kn += 1
+
+    #------------------------Author and mail 2---------------------------------------------------------------------------
+    an = n
+    for each in authorsArr:
+        f.write('H' + str(an) , each)
+        an += 1
+
+    mn = n
+    for each in mailArr:
+        f.write('I' + str(mn) , each)
+        mn += 1
+
+    #------------------------Affiliation 2---------------------------------------------------------------------------
+    afn = n
+    for each in affiArr:
+        f.write('J' + str(afn) , each)
+        afn += 1
+
+    n += maximum
+
     print("-----------------------------------------------------------")
-    f.write("\n")
-    x = count +1
-    return x
+    return n
 
 #-------------------------------------------------------------------------------------------------------------------------------
 def springer(input):
-    for i in range(0,999999):
-        if(i == 0):
+    for i in range(1,999999):
+        if(i == 1):
             link = []
             headers = {
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'}
@@ -100,35 +185,48 @@ def springer(input):
             response = requests.get(my_url, headers=headers)
             page = soup(response.content, "html5lib")
             now = datetime.datetime.now()
-            filename = "Springer_" + input.replace(" ","_") + ".csv"
-            f = open(filename,"w",encoding="utf-16")
-            f.write("Keyword:," + input + "\nDatabase:,https://link.springer.com/\nDate:," + str(now.isoformat()) +"\n\n")
+            filename = "Springer_" + input.replace(" ","_") + ".xlsx"
+            # f = open(filename,"w",encoding="utf-16")
+            workbook = xlsxwriter.Workbook(filename)
+            f = workbook.add_worksheet()
+            # f.write("Keyword:," + input + "\nDatabase:,https://link.springer.com/\nDate:," + str(now.isoformat()) +"\n\n")
+            f.write('A1', 'Keyword : ')
+            f.write('B1', input)
+            f.write('A2', 'Database : ')
+            f.write('B2', 'https://link.springer.com/')
+            f.write('A3', 'Date : ')
+            f.write('B3', str(now.isoformat()))
             body = page.findAll("li",{"class":"no-access"})
             print(len(body))
             print("---------------------------------------------------------------")
             count = 1
+            n = 4
             for each in body:
                 link.append(each.h2.a['href'])
                 print("link : " + each.h2.a['href'])
             for each in link:
-                count = crawInfo(each,f,count)
-
-        # else:
-        #     headers = {
-        #         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'}
-        #     my_url = 'https://www.springer.com/gp/search?facet-type=type__journal&query=' + input.replace(" ","+") + '&submit=Submit'
-        #     response = requests.get(my_url, headers=headers)
-        #     page = soup(response.content, "html5lib")
-        #     now = datetime.datetime.now()
-        #     # f.write("Keyword:," + input + "\nDatabase:,https://link.springer.com/\nDate:," + str(now.isoformat()) +"\n\n")
-        #     header = "S.No,Journal Name,Subtitle,Volume,Keywords,Doi number,Author name,Affiliation\n"
-        #     # f.write(header)
-        #     body = page.findAll("div",{"class":"result-item"})
-        #     print(len(body))
-        #     print("---------------------------------------------------------------")
-        #     for each in body:
-        #         # print(each.prettify())
-        #         print("Title : " + each.a.text)
-        #
-        #
-        #         print("---------------------------------------------")
+                n = crawInfo(each,f,count,n)
+                count += 1
+        else:
+            try:
+                headers = {
+                    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'}
+                my_url = 'https://link.springer.com/search/page/' + str(i) + '?facet-content-type=%22Article%22&query=' + input.replace(" ","+")
+                response = requests.get(my_url, headers=headers)
+                page = soup(response.content, "html5lib")
+                now = datetime.datetime.now()
+                body = page.findAll("li",{"class":"no-access"})
+                print(len(body))
+                print("---------------------------------------------------------------")
+                count = 1
+                n = 4
+                for each in body:
+                    link.append(each.h2.a['href'])
+                    print("link : " + each.h2.a['href'])
+                for each in link:
+                    n = crawInfo(each,f,count,n)
+                    count += 1
+            except Exception as e:
+                print("Exception else : " + str(e))
+                break
+    workbook.close()

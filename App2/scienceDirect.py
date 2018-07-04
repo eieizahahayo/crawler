@@ -12,47 +12,66 @@ def replace_all(text, wordDict):
 
 #-----------------------------------------------ScienceDirect--------------------------------------------------------------------------------
 def scienceDirect(input,aut):
-    print("enter SD")
-    count = 1
-    headers = {
-        'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'}
-    if(not aut):
-        print("enter no aut")
-        print("------------------------------------------------------------------------")
-        my_url = 'https://www.sciencedirect.com/search?qs=' + input.replace(" ","%20") + '&show=25&sortBy=relevance'
-        response = requests.get(my_url, headers=headers)
-        page = soup(response.content, "html5lib")
-        body = page.findAll("a",{"class":"result-list-title-link u-font-serif text-s"})
-        links = []
-        filename = "scienceDirect_" + input.replace(" ","_") + ".csv"
-        f = open(filename,"w",encoding="utf-16")
-        now = datetime.datetime.now()
-        f.write("Keyword:," + input + "\nDatabase:,https://www.sciencedirect.com\nDate:," + str(now.isoformat()) +"\n\n")
-        f.write("S.No,Research Title,Journal Name,Volume and Date of publication,Keywords,Doi number,Author name,Affiliation,Email ID\n")
-        for each in body:
-            links.append(each['href'])
-        for each in links:
-            print("try : " + each)
-            count = crawInfoScienceDirect(each,f,count)
-        f.close()
-    else:
-        print("enter aut")
-        print("------------------------------------------------------------------------")
-        my_url = "https://www.sciencedirect.com/search?qs=" + input.replace(" ","%20") + "&authors=" + aut.replace(" ","%20") + "&show=25&sortBy=relevance"
-        response = requests.get(my_url, headers=headers)
-        page = soup(response.content, "html5lib")
-        body = page.findAll("a",{"class":"result-list-title-link u-font-serif text-s"})
-        links = []
-        filename = "scienceDirect" + input + "By"+ aut + ".csv"
-        f = open(filename,"w",encoding="utf-16")
-        now = datetime.datetime.now()
-        f.write("Keyword:," + input + "\nDatabase:,https://www.sciencedirect.com\nDate:," + str(now.isoformat()) +"\n")
-        f.write("S.No,Research Title,Journal Name,Volume and Date of publication,Keywords,Doi number,Author name,Affiliation,Email ID\n")
-        for each in body:
-            links.append(each['href'])
-        for each in links:
-            print("try : " + each)
-            count = crawInfoScienceDirect(each,f,count)
+    for i in range(0,99999):
+        try:
+            print("enter SD")
+            count = 1
+            stop = ""
+            headers = {
+                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'}
+            if(not aut):
+                print("enter no aut")
+                print("------------------------------------------------------------------------")
+                my_url = 'https://www.sciencedirect.com/search?qs=' + input.replace(" ","%20") + '&show=100&sortBy=relevance&offset=' + str(i)
+                response = requests.get(my_url, headers=headers)
+                page = soup(response.content, "html5lib")
+                body = page.findAll("a",{"class":"result-list-title-link u-font-serif text-s"})
+                if(i == 0):
+                    stop = body[0].text
+                links = []
+                checker = []
+                filename = "scienceDirect_" + input.replace(" ","_") + ".csv"
+                f = open(filename,"w",encoding="utf-16")
+                now = datetime.datetime.now()
+                f.write("Keyword:," + input + "\nDatabase:,https://www.sciencedirect.com\nDate:," + str(now.isoformat()) +"\n\n")
+                f.write("S.No,Research Title,Journal Name,Volume and Date of publication,Keywords,Doi number,Author name,Affiliation,Email ID\n")
+                for each in body:
+                    links.append(each['href'])
+                    checker.append(each.text)
+                for each in checker:
+                    if(each == stop):
+                        break
+                for each in links:
+                    print("try : " + each)
+                    count = crawInfoScienceDirect(each,f,count)
+            else:
+                print("enter aut")
+                print("------------------------------------------------------------------------")
+                my_url = 'https://www.sciencedirect.com/search?qs=' + input.replace(" ","%20") + '&authors=' + aut.replace(" ","%20") +  '&show=100&sortBy=relevance&offset=' + str(i)
+                response = requests.get(my_url, headers=headers)
+                page = soup(response.content, "html5lib")
+                body = page.findAll("a",{"class":"result-list-title-link u-font-serif text-s"})
+                if(i == 0):
+                    stop = body[0].text
+                links = []
+                checker = []
+                filename = "scienceDirect_" + input.replace(" ","_") + ".csv"
+                f = open(filename,"w",encoding="utf-16")
+                now = datetime.datetime.now()
+                f.write("Keyword:," + input + "\nDatabase:,https://www.sciencedirect.com\nDate:," + str(now.isoformat()) +"\n\n")
+                f.write("S.No,Research Title,Journal Name,Volume and Date of publication,Keywords,Doi number,Author name,Affiliation,Email ID\n")
+                for each in body:
+                    links.append(each['href'])
+                    checker.append(each.text)
+                for each in checker:
+                    if(each == stop):
+                        break
+                for each in links:
+                    print("try : " + each)
+                    count = crawInfoScienceDirect(each,f,count)
+        except Exception as e:
+            print("Exception big : " + str(e))
+            break
         f.close()
 
 
