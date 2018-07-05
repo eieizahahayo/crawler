@@ -31,7 +31,8 @@ def scienceDirect(input,aut):
                 links = []
                 checker = []
                 filename = "scienceDirect_" + input.replace(" ","_") + ".csv"
-                f = open(filename,"w",encoding="utf-16")
+                filepath = "scienceDirect/csv/" + filename
+                f = open(filepath,"w",encoding="utf-16")
                 now = datetime.datetime.now()
                 f.write("Keyword:," + input + "\nDatabase:,https://www.sciencedirect.com\nDate:," + str(now.isoformat()) +"\n\n")
                 f.write("S.No,Research Title,Journal Name,Volume and Date of publication,Keywords,Doi number,Author name,Affiliation,Email ID\n")

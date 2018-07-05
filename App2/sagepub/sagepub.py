@@ -31,7 +31,8 @@ def sage(input):
             page = soup(response.content, "html5lib")
             now = datetime.datetime.now()
             filename = "Sagepub_" + input.replace(" ","_") + ".xlsx"
-            workbook = xlsxwriter.Workbook(filename)
+            filepath = "sagepub/csv/" + filename
+            workbook = xlsxwriter.Workbook(filepath)
             f = workbook.add_worksheet()
             f.write('A1', 'Keyword : ')
             f.write('B1', input)
@@ -39,7 +40,7 @@ def sage(input):
             f.write('B2', 'http://journals.sagepub.com/')
             f.write('A3', 'Date : ')
             f.write('B3', str(now.isoformat()))
-            body = page.find("article",{"class":"searchResultItem"})
+            body = page.findAll("article",{"class":"searchResultItem"})
             # print(page.find("article",{"class":"searchResultItem"}).h2.text)
             print("---------------------------------------------------------------")
             count = 1

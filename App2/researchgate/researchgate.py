@@ -31,7 +31,8 @@ def gate(input):
             page = soup(response.content, "html5lib")
             now = datetime.datetime.now()
             filename = "research_gate_" + input.replace(" ","_") + ".xlsx"
-            workbook = xlsxwriter.Workbook(filename)
+            filepath = "researchgate/csv/" + filename
+            workbook = xlsxwriter.Workbook(filepath)
             f = workbook.add_worksheet()
             f.write('A1', 'Keyword : ')
             f.write('B1', input)

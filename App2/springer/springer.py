@@ -18,7 +18,6 @@ def crawInfo(input,f,count,n):
     page = soup(response.content, "html5lib")
 
     #----------------------Initialization-----------------------------------------------------------------------------
-    # f.write(url + "\n")
     f.write('A' + str(n) , url)
     n += 1
     print(url)
@@ -134,17 +133,6 @@ def crawInfo(input,f,count,n):
         print("Exception Affiliation : " + str(e))
         affiArr.append("Cannot get affiliation")
 
-
-
-    # for i in range(0,len(keywords)):
-    #     if(i == 0):
-    #         f.write('E' + str(n) , keywords[i])
-    #     else:
-    #         print("Keywords : " + keywords[i].text)
-    #         f.write(",,,," + keywords[i].text + "\n")
-
-
-
     maximum = max([len(keywords),len(authorsArr),len(mailArr)])
     #------------------------Key words 2---------------------------------------------------------------------------
     kn = n
@@ -186,10 +174,9 @@ def springer(input):
             page = soup(response.content, "html5lib")
             now = datetime.datetime.now()
             filename = "Springer_" + input.replace(" ","_") + ".xlsx"
-            # f = open(filename,"w",encoding="utf-16")
-            workbook = xlsxwriter.Workbook(filename)
+            filepath = "springer/csv/" + filename
+            workbook = xlsxwriter.Workbook(filepath)
             f = workbook.add_worksheet()
-            # f.write("Keyword:," + input + "\nDatabase:,https://link.springer.com/\nDate:," + str(now.isoformat()) +"\n\n")
             f.write('A1', 'Keyword : ')
             f.write('B1', input)
             f.write('A2', 'Database : ')

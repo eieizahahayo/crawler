@@ -22,7 +22,8 @@ def arXiv(input):
     body = page.findAll("a")
     links = []
     filename = "arxiv_" + input.replace(" ","_") + ".csv"
-    f = open(filename,"w",encoding="utf-16")
+    filepath = "arxiv/csv/" + filename
+    f = open(filepath,"w",encoding="utf-16")
     header = "S.No,Title,Subject,date,Journal reference,DOI,Authors\n"
     f.write(header)
     for a in body:
