@@ -3,6 +3,9 @@ import requests
 from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
 import datetime
+import re
+import xlsxwriter
+
 
 def replace_all(text, wordDict):
     for key in wordDict:
@@ -10,30 +13,38 @@ def replace_all(text, wordDict):
     return text
 
 
-
 #-------------------------------------------------arXiv------------------------------------------------------------------------------
 def arXiv(input):
+
+    filename = "arxiv_" + input.replace(" ","_") + ".xlsx"
+    filepath = "arxiv/csv/" + filename
+    now = datetime.datetime.now()
+    workbook = xlsxwriter.Workbook(filepath)
+    f = workbook.add_worksheet()
+    f.write('A1', 'Keyword : ')
+    f.write('B1', input)
+    f.write('A2', 'Database : ')
+    f.write('B2', 'https://arxiv.org/')
+    f.write('A3', 'Date : ')
+    f.write('B3', str(now.isoformat()))
+    count = 1
+    n = 4
+
     headers = {
         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'}
     print("enter arXiv")
-    my_url = 'https://arxiv.org/search/?query=' + input.replace(" ","+") + '&searchtype=all&order=-announced_date_first&size=50'
+    my_url = 'https://arxiv.org/search/?query=' + input.replace(" ","+") + '&searchtype=journal_ref&order=-announced_date_first&size=50'
     response = requests.get(my_url, headers=headers)
     page = soup(response.content, "html5lib")
     body = page.findAll("a")
     links = []
-    filename = "arxiv_" + input.replace(" ","_") + ".csv"
-    filepath = "arxiv/csv/" + filename
-    f = open(filepath,"w",encoding="utf-16")
-    header = "S.No,Title,Subject,date,Journal reference,DOI,Authors\n"
-    f.write(header)
     for a in body:
         if("arXiv:" in a.text):
             links.append(a['href'])
-    count = 1
     for each in links:
         print("try : " + each)
-        f.write(str(count))
-        count = crawInfoArxiv(each,f,count)
+        n = crawInfoArxiv(each,f,count,n)
+        count +=1
 
     start = 50
     for i in range(2,999999):
@@ -41,7 +52,7 @@ def arXiv(input):
             headers = {
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'}
             print("enter arXiv")
-            my_url = 'https://arxiv.org/search/?query=' + input.replace(" ","+") + '&searchtype=all&order=-announced_date_first&size=50&start=' + str(start)
+            my_url = 'https://arxiv.org/search/?query=' + input.replace(" ","+") + '&searchtype=journal_ref&order=-announced_date_first&size=50&start=' + str(start)
             response = requests.get(my_url, headers=headers)
             page = soup(response.content, "html5lib")
             body = page.findAll("a")
@@ -51,8 +62,8 @@ def arXiv(input):
                     links.append(a['href'])
             for each in links:
                 print("try : " + each)
-                f.write(str(count))
-                count = crawInfoArxiv(each,f,count)
+                n = crawInfoArxiv(each,f,count,n)
+                count +=1
             start = start + 50
         except Exception as e:
             print("Exception : " + str(e))
@@ -62,7 +73,7 @@ def arXiv(input):
 
 
 
-def crawInfoArxiv(url,f,count):
+def crawInfoArxiv(url,f,count,n):
     headers = {
         'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'}
     response = requests.get(url, headers=headers)
@@ -70,44 +81,56 @@ def crawInfoArxiv(url,f,count):
     body = page.find("body")
     re = {"\n":" " , ",":" ","Title:":" ","Authors:":" "}
 
-    #-------------------------S.No---------------------------------
-    f.write(" || " + url + ",")
+    #-------------------Initialization--------------------------------------------------------
+    f.write('A' + str(n) , url)
+    print("link : " + url)
+    n += 1
+    f.write('A' + str(n) , 'S.No')
+    f.write('B' + str(n) , 'Title')
+    f.write('C' + str(n) , 'Subject')
+    f.write('D' + str(n) , 'Date')
+    f.write('E' + str(n) , 'Ref')
+    f.write('F' + str(n) , 'Doi number')
+    f.write('G' + str(n) , 'Author name')
+    n += 1
+    f.write('A' + str(n) , str(count))
+
 
 
     #-------------------------Title---------------------------------
     try:
         title = body.find("h1",{"class":"title mathjax"})
         print("Title : " + replace_all(title.text,re))
-        f.write(replace_all(title.text,re) + ",")
+        f.write('B' + str(n) , title.text)
     except Exception as e:
-        f.write("Cannot get title,")
+        f.write('B' + str(n) , 'Cannot get title')
         print("Exception Title : " + str(e))
 
     #-------------------------Subject---------------------------------
     try:
         subj = body.find("span",{"class":"primary-subject"})
         print("Subject : " + replace_all(subj.text,re))
-        f.write(replace_all(subj.text,re) + ",")
+        f.write('C' + str(n) , subj.text)
     except Exception as e:
-        f.write("Cannot get subject,")
+        f.write('C' + str(n) , 'Cannot get subject')
         print("Exception Subject : " + str(e))
 
     #-------------------------Date---------------------------------
     try:
         date = body.find("div",{"class":"dateline"})
         print("Date : " + replace_all(date.text,re))
-        f.write(replace_all(date.text,re) + ",")
+        f.write('D' + str(n) , date.text)
     except Exception as e:
-        f.write("Cannot get date,")
+        f.write('D' + str(n) , 'Cannot get date')
         print("Exception Date : " + str(e))
 
     #-------------------------Ref---------------------------------
     try:
         ref = body.find("td",{"class":"tablecell jref"}).text
         print("Ref : " + replace_all(ref,re))
-        f.write(replace_all(ref,re) + ",")
+        f.write('E' + str(n) , ref)
     except Exception as e:
-        f.write("Cannot get reference,")
+        f.write('E' + str(n) , 'Cannot get ref')
         print("Exception ref : " + str(e))
 
     #-------------------------DOI---------------------------------
@@ -122,16 +145,18 @@ def crawInfoArxiv(url,f,count):
                 divDoi = body.find("div","metatable")
                 doi = divDoi.find("td",each)
                 print("Doi : " + doi.text)
-                f.write(doi.text + ",")
+                f.write('F' + str(n) , doi.text)
                 check = True
+                print("DOI True 1")
             except:
                 continue
     except Exception as e:
-        f.write("Cannot get doi,")
+        f.write('F' + str(n) , 'Cannot get doi')
         check2 = True
+        print("DOI True 2")
         print("Exception doi : " + str(e))
     if(check == False and check2 == False):
-        f.write("Cannot get doi,")
+        f.write('F' + str(n) , 'Cannot get doi')
         print("Cannot get doi")
 
     #-------------------------Authors---------------------------------
@@ -139,16 +164,12 @@ def crawInfoArxiv(url,f,count):
         divAut = body.find("div",{"class":"authors"})
         auts = divAut.findAll("a")
         for i in range(0,len(auts)):
-            if(i == 0):
-                print("Authors : " + replace_all(auts[i].text,re))
-                f.write(replace_all(auts[i].text,re) + "\n")
-            else:
-                print(auts[i].text)
-                f.write(",,,,,," + replace_all(auts[i].text,re) + "\n")
+            print("Authors : " + replace_all(auts[i].text,re))
+            f.write('G' + str(n) , auts[i].text)
+            n += 1
     except Exception as e:
-        f.write("Cannot get authors\n")
+        f.write('G' + str(n) , 'Cannot get authors')
         print("Exception Authors : " + str(e))
 
     print("-------------------------------------------------------------------------------")
-    x = count + 1
-    return x
+    return n

@@ -91,13 +91,18 @@ def crawInfoScienceDirect(input,f,count):
 
     #Title
     try:
-        title = body.find("span",{"class":"title-text"})
-        print("Title : " + replace_all(title.text,re))
-        f.write(replace_all(title.text,re) + ",")
-    except:
-        title = body.find("h1",{"class":"svTitle"})
-        print("Title : " + replace_all(title.text,re))
-        f.write(replace_all(title.text,re) + ",")
+        temp = [{"tag": "span", "className": {"class":"title-text"}}, {"tag":"span", "className":{"class":"reference"}}, {"tag":"h1", "className":{"class":"svTitle"}}]
+        checkTitle = False
+        for each in temp:
+            if(checkTitle):
+                break
+            title = body.find(each['tag'] , each['className'])
+            print("Title : " + replace_all(title.text,re))
+            f.write(replace_all(title.text,re) + ",")
+            checkTitle = True
+    except Exception as e:
+        print("Exception title : " + str(e))
+        f.write("Cannot get title,")
 
     #Field of study
     findFieldStudy = [{"tag": "a", "className": {"class":"publication-title-link"}}, {"tag":"div", "className":{"class":"title"}}]
@@ -107,7 +112,7 @@ def crawInfoScienceDirect(input,f,count):
             if(done):
                 break
             title = body.find(ele['tag'],ele['className'])
-            print("Title : " + replace_all(title.text,re))
+            print("Journal : " + replace_all(title.text,re))
             f.write(replace_all(title.text,re) + ",")
             done = True
         except:

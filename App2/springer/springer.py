@@ -5,11 +5,6 @@ from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
 import datetime
 
-def replace_all(text, wordDict):
-    for key in wordDict:
-        text = text.replace(key, wordDict[key])
-    return text
-
 def crawInfo(input,f,count,n):
     url = "https://link.springer.com" + input
     headers = {
@@ -165,11 +160,11 @@ def crawInfo(input,f,count,n):
 #-------------------------------------------------------------------------------------------------------------------------------
 def springer(input):
     for i in range(1,999999):
-        if(i == 1):
+        try:
             link = []
             headers = {
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'}
-            my_url = 'https://link.springer.com/search?query=' + input.replace(" ","+") + '&facet-content-type=%22Article%22'
+            my_url = 'https://link.springer.com/search/page/' + str(i) + '?facet-content-type=%22Article%22&query=' + input.replace(" ","+")
             response = requests.get(my_url, headers=headers)
             page = soup(response.content, "html5lib")
             now = datetime.datetime.now()
@@ -194,26 +189,7 @@ def springer(input):
             for each in link:
                 n = crawInfo(each,f,count,n)
                 count += 1
-        else:
-            try:
-                headers = {
-                    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'}
-                my_url = 'https://link.springer.com/search/page/' + str(i) + '?facet-content-type=%22Article%22&query=' + input.replace(" ","+")
-                response = requests.get(my_url, headers=headers)
-                page = soup(response.content, "html5lib")
-                now = datetime.datetime.now()
-                body = page.findAll("li",{"class":"no-access"})
-                print(len(body))
-                print("---------------------------------------------------------------")
-                count = 1
-                n = 4
-                for each in body:
-                    link.append(each.h2.a['href'])
-                    print("link : " + each.h2.a['href'])
-                for each in link:
-                    n = crawInfo(each,f,count,n)
-                    count += 1
-            except Exception as e:
-                print("Exception else : " + str(e))
-                break
+        except Exception as e:
+            print("Exception else : " + str(e))
+            break
     workbook.close()
