@@ -11,69 +11,51 @@ def replace_all(text, wordDict):
 
 
 #-----------------------------------------------ScienceDirect--------------------------------------------------------------------------------
-def scienceDirect(input,aut):
+def scienceDirect(input):
+    filename = "scienceDirect_" + input.replace(" ","_") + ".csv"
+    filepath = "scienceDirect/csv/" + filename
+    f = open(filepath,"w",encoding="utf-16")
+    now = datetime.datetime.now()
+    f.write("Keyword:," + input + "\nDatabase:,https://www.sciencedirect.com\nDate:," + str(now.isoformat()) +"\n\n")
+    f.write("S.No,Research Title,Journal Name,Volume and Date of publication,Keywords,Doi number,Author name,Affiliation,Email ID\n")
+    # stop = ""
+    offset = 0
+    count = 1
     for i in range(0,99999):
         try:
             print("enter SD")
-            count = 1
-            stop = ""
             headers = {
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'}
-            if(not aut):
-                print("enter no aut")
-                print("------------------------------------------------------------------------")
-                my_url = 'https://www.sciencedirect.com/search?qs=' + input.replace(" ","%20") + '&show=100&sortBy=relevance&offset=' + str(i)
-                response = requests.get(my_url, headers=headers)
-                page = soup(response.content, "html5lib")
-                body = page.findAll("a",{"class":"result-list-title-link u-font-serif text-s"})
-                if(i == 0):
-                    stop = body[0].text
-                links = []
-                checker = []
-                filename = "scienceDirect_" + input.replace(" ","_") + ".csv"
-                filepath = "scienceDirect/csv/" + filename
-                f = open(filepath,"w",encoding="utf-16")
-                now = datetime.datetime.now()
-                f.write("Keyword:," + input + "\nDatabase:,https://www.sciencedirect.com\nDate:," + str(now.isoformat()) +"\n\n")
-                f.write("S.No,Research Title,Journal Name,Volume and Date of publication,Keywords,Doi number,Author name,Affiliation,Email ID\n")
-                for each in body:
-                    links.append(each['href'])
-                    checker.append(each.text)
-                for each in checker:
-                    if(each == stop):
-                        break
-                for each in links:
-                    print("try : " + each)
-                    count = crawInfoScienceDirect(each,f,count)
-            else:
-                print("enter aut")
-                print("------------------------------------------------------------------------")
-                my_url = 'https://www.sciencedirect.com/search?qs=' + input.replace(" ","%20") + '&authors=' + aut.replace(" ","%20") +  '&show=100&sortBy=relevance&offset=' + str(i)
-                response = requests.get(my_url, headers=headers)
-                page = soup(response.content, "html5lib")
-                body = page.findAll("a",{"class":"result-list-title-link u-font-serif text-s"})
-                if(i == 0):
-                    stop = body[0].text
-                links = []
-                checker = []
-                filename = "scienceDirect_" + input.replace(" ","_") + ".csv"
-                f = open(filename,"w",encoding="utf-16")
-                now = datetime.datetime.now()
-                f.write("Keyword:," + input + "\nDatabase:,https://www.sciencedirect.com\nDate:," + str(now.isoformat()) +"\n\n")
-                f.write("S.No,Research Title,Journal Name,Volume and Date of publication,Keywords,Doi number,Author name,Affiliation,Email ID\n")
-                for each in body:
-                    links.append(each['href'])
-                    checker.append(each.text)
-                for each in checker:
-                    if(each == stop):
-                        break
-                for each in links:
-                    print("try : " + each)
-                    count = crawInfoScienceDirect(each,f,count)
+            breaker = False
+            print("------------------------------------------------------------------------")
+            my_url = 'https://www.sciencedirect.com/search?qs=' + input.replace(" ","%20") + '&show=100&sortBy=relevance&offset=' + str(offset)
+            offset += 100
+            response = requests.get(my_url, headers=headers)
+            page = soup(response.content, "html5lib")
+            body = page.findAll("a",{"class":"result-list-title-link u-font-serif text-s"})
+            stop = body[0].text
+            links = []
+            checker = []
+            # if(i == 0):
+            #     stop = body[len(body)-1].text
+            for each in body:
+                links.append(each['href'])
+                # checker.append(each.text)
+            # for each in checker:
+            #     print("-------------------------------------------")
+            #     print(each + " | " + stop)
+            #     print("-------------------------------------------")
+            #     if(each == stop and i > 0):
+            #         return 0
+            for each in links:
+                print("try : " + each)
+                count = crawInfoScienceDirect(each,f,count)
         except Exception as e:
             print("Exception big : " + str(e))
             break
-        f.close()
+    f.close()
+    print("-------------------------------------")
+    print(input)
 
 
 
@@ -105,21 +87,25 @@ def crawInfoScienceDirect(input,f,count):
         f.write("Cannot get title,")
 
     #Field of study
-    findFieldStudy = [{"tag": "a", "className": {"class":"publication-title-link"}}, {"tag":"div", "className":{"class":"title"}}]
-    done = False
-    for ele in findFieldStudy:
-        try:
-            if(done):
-                break
-            title = body.find(ele['tag'],ele['className'])
-            print("Journal : " + replace_all(title.text,re))
-            f.write(replace_all(title.text,re) + ",")
-            done = True
-        except:
-            continue
-    if(done == False):
-        print("Field of study is a picture.")
-        f.write("Field of study is a picture.,")
+    try:
+        findFieldStudy = [{"tag": "a", "className": {"class":"publication-title-link"}}, {"tag":"div", "className":{"class":"title"}}]
+        done = False
+        for ele in findFieldStudy:
+            try:
+                if(done):
+                    break
+                title = body.find(ele['tag'],ele['className'])
+                print("Journal : " + replace_all(title.text,re))
+                f.write(replace_all(title.text,re) + ",")
+                done = True
+            except:
+                continue
+        if(done == False):
+            print("Field of study is a picture.")
+            f.write("Field of study is a picture.,")
+    except Exception as e:
+        print("Exception journal : " + str(e))
+        f.write("Cannot get field of study,")
 
     #detail
     try:
@@ -129,6 +115,7 @@ def crawInfoScienceDirect(input,f,count):
         print("done try 1")
     except Exception as e:
         print("Exception1 : " + str(e))
+        f.write("Cannot get detail")
 
     try:
         vol = body.find("p",{"class":"specIssueTitle"}).text
@@ -137,6 +124,7 @@ def crawInfoScienceDirect(input,f,count):
         print("done try 3")
     except Exception as e:
         print("Exception3 : " + str(e))
+        f.write("Cannot get volume")
 
     try:
         detail = body.find("p",{"class":"volIssue"}).text
@@ -145,6 +133,7 @@ def crawInfoScienceDirect(input,f,count):
         print("done try 2")
     except Exception as e:
         print("Exception2 : " + str(e))
+        f.write("Cannot get detail")
 
     f.write(",")
 
@@ -196,8 +185,8 @@ def crawInfoScienceDirect(input,f,count):
                 print(doi.text)
                 f.write(doi.text+"\n")
                 done = True
-            except:
-                print("except : " + str(i))
+            except Exception as e:
+                print("except : " + str(e))
                 continue
         if(done == False):
             print("Cannot get DOI")

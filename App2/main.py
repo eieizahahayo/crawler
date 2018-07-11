@@ -19,8 +19,7 @@ if(choice == "1"):
     arXiv(key)
 elif(choice == "2"):
     key = input('Enter the keyword : ')
-    aut = input('Enter the author : ')
-    scienceDirect(key,aut)
+    scienceDirect(key)
 elif(choice == "3"):
     key = input("Enter the keyword : ")
     wiley(key)

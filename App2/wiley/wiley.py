@@ -63,8 +63,8 @@ def contact(input,f,n):
             tempmail = set(email)
             for each in tempmail:
                 f.write('H' + str(n) , each)
-                n += 1
         print("-----------------------------------------")
+        n += 1
     return n
 
 #-------------------------------------------------arXiv------------------------------------------------------------------------------
@@ -80,9 +80,9 @@ def wiley(input):
     f.write('B2', 'https://onlinelibrary.wiley.com/')
     f.write('A3', 'Date : ')
     f.write('B3', str(now.isoformat()))
+    count = 1
+    n = 4
     for i in range(0,999999):
-        count = 1
-        n = 4
         print("Page : " + str(i))
         try:
             headers = {
@@ -137,12 +137,20 @@ def wiley(input):
                     print("Exception volume : " + str(e))
                     f.write('D' + str(n) , 'Cannot get volume')
                 #--------------Date----------------------------------------------
-                print("Date : " + date)
-                f.write('E' + str(n) , date)
+                try:
+                    print("Date : " + date)
+                    f.write('E' + str(n) , date)
+                except Exception as e:
+                    print("Exception date : " + str(e))
+                    f.write('E' + str(n) , 'Cannot get date')
 
                 #--------------Doi----------------------------------------------
-                print("Doi : https://nph.onlinelibrary.wiley.com" + doi)
-                f.write('F' + str(n) , 'https://nph.onlinelibrary.wiley.com' + doi)
+                try:
+                    print("Doi : https://nph.onlinelibrary.wiley.com" + doi)
+                    f.write('F' + str(n) , 'https://nph.onlinelibrary.wiley.com' + doi)
+                except Exception as e:
+                    print("Exception doi : " + str(e))
+                    f.write('F' + str(n) , 'Cannot get doi')
 
                 #--------------Authors and email----------------------------------------------
                 parse = "https://nph.onlinelibrary.wiley.com" + doi
@@ -158,4 +166,4 @@ def wiley(input):
                 print("Page : " + str(i))
                 break
     print("Jimmy")
-    f.close()
+    workbook.close()
