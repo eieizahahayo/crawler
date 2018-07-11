@@ -3,111 +3,117 @@ import requests
 from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
 import re
-import csv
+import xlsxwriter
 
-def replace_all(text, wordDict):
-    for key in wordDict:
-        text = text.replace(key, wordDict[key])
-    return text
+def initialization(n):
+    print("Enter initialization")
+    f.write('A' + str(n) , 'S.no')
+    f.write('B' + str(n) , 'Website')
+    f.write('C' + str(n) , 'University/faculty')
+    f.write('D' + str(n) , 'Email')
+    f.write('E' + str(n) , 'Name')
+    f.write('F' + str(n) , 'Telephone number')
 
+def definitionWrite(input,n):
+    #------------------------University----------------------------------------------------------------
+    print("enter definitionWrite")
+    f.write('C' + str(n) , input)
 
-def crawInfo(str):
-    response = requests.get(str, headers={'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36'})
+def crawInfo(url,f,n,count):
+    response = requests.get(url, headers={'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36'})
     page_soup = soup(response.content, "html5lib")
     body = page_soup.find("body")
     divBody = body.findAll(text=True)
-    f.write(str+"\n")
-    f.write("Email,name,phone\n")
-    dic = {"\n":"" , ",":"", "\t":"","\r":""}
     name = []
     email = []
     tele = []
-    title = []
+    #------------------------Initialization----------------------------------------------------------------
+    f.write('A' + str(n) , str(count))
+    f.write('B' + str(n) , url)
+
     for i in range(0 , len(divBody)):
         match = re.search("(( )*[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)", divBody[i])
         if("dr." in divBody[i].lower() or "prof" in divBody[i].lower() or "mr." in divBody[i] or "mrs." in divBody[i] or "ms." in divBody[i]):
             if(len(divBody[i])<100 and not(divBody[i] in name)):
-                txt = replace_all(divBody[i],dic)
-                name.append(txt)
-                print(txt)
+                name.append(divBody[i])
         elif(match):
-            email.append(match.group(0))
-            print(match.group(0))
-        # elif("department" in divBody[i].lower() or "faculty" in divBody[i].lower()):
-        #     if(len(divBody[i])<100 and not(divBody[i] in title)):
-        #         txt = replace_all(divBody[i],dic)
-        #         title.append(txt)
-        #         print(txt)
+            email.append(match.group(0).replace(" ",""))
         match = re.search('(\d{3}[-\.\s]??\d{3}[-\.\s]??\d{4}|\(\d{3}\)\s*\d{3}[-\.\s]??\d{4}|\d{3}[-\.\s]??\d{4})', divBody[i])
         if match:
             if(len(divBody[i])<100 and not(divBody[i] in tele)):
-                txt = replace_all(divBody[i],dic)
-                tele.append(txt)
-                print(txt)
-    str1 = "="
-    str2 = "="
-    str3 = "="
-    title_temp = "="
-    newline = "& CHAR(10) &"
-
-    # for i in range(0,len(title)):
-    #     if(i == len(title)-1):
-    #         tmp = '"'+title[i]+'"'
-    #     else:
-    #         tmp = '"'+title[i]+'"'+newline
-    #     title_temp = title_temp + tmp
-    # print(title_temp)
-    # f.write(title_temp + "\n")
-    #
-    # for i in range(0,len(email)):
-    #     if(i == len(email)-1):
-    #         tmp = '"'+email[i]+'"'
-    #     else:
-    #         tmp = '"'+email[i]+'"'+newline
-    #         str2 = str2 + tmp
-    #         print(str2)
-    #         f.write(str2+",")
-
-    f.write(email[0] + ",")
-
-    for i in range(0,len(name)):
-        if(i == len(name)-1):
-            tmp = '"'+name[i]+'"'
+                tele.append(divBody[i])
+    #------------------------Information----------------------------------------------------------------
+    et = n
+    nt = n
+    tt = n
+    maximum = 0
+    try:
+        if(len(email) == 0):
+            f.write('D' + str(et), 'Email is protected')
         else:
-            tmp = '"'+name[i]+'"'+newline
-        str1 = str1 + tmp
-    print(str1)
-    f.write(str1 + ",")
+            for each in set(email):
+                f.write('D' + str(et) , each)
+                et += 1
+        print("Email : " + each )
+    except Exception as e:
+        print("Email exception : " + str(e))
 
+    print("--------------------------------------------------------------")
+    try:
+        for each in set(name):
+            f.write('E' + str(nt) , each)
+            nt += 1
+            print("Name : " + each)
+    except Exception as e:
+        print("Name exception : " + str(e))
 
-    for i in range(0,len(tele)):
-         if(i == len(tele)-1):
-             tmp = '"'+tele[i]+'"'
-         else:
-             tmp = '"'+tele[i]+'"'+newline
-         str3 = str3 + tmp
-    print(str3)
-    f.write(str3+"\n")
+    print("--------------------------------------------------------------")
+    try:
+        for each in set(tele):
+            f.write('F' + str(tt) , each)
+            tt += 1
+            print("tele : " + each )
+    except Exception as e:
+        print("Tele exception : " + str(e))
+    print("--------------------------------------------------------------")
+    list = [et,nt,tt]
+    n += (max(list) - n)
+    return n
 
-    for i in range(1,len(email)):
-        f.write(email[i] + "\n")
-
-#-------------------------------------------------------------------------------------------------
+#--------------------------main-----------------------------------------------------------------------
 with open("list.txt", "r") as ins:
     uni = []
     for line in ins:
         uni.append(line)
-filename = "contactIndia.csv"
-f = open(filename,"w")
+filename = "contact_India.xlsx"
+workbook = xlsxwriter.Workbook(filename)
+f = workbook.add_worksheet()
+n = 1
+count = 1
 for i in range(0,len(uni)):
     try:
+        if(i%2 == 0):
+            initialization(n)
+            n += 1
+            print("Enter if : " + uni[i])
+            definitionWrite(uni[i],n)
+        elif(i%2 == 1):
+            print("Enter else : " + uni[i])
+            n = crawInfo(uni[i].replace("\n",""),f,n,count)
+            count += 1
+            print("Success")
+            print("---------------------------------------------------------------------------------------")
+    except Exception as e:
         print(uni[i])
-        crawInfo(uni[i].replace("\n",""))
-        print("Success")
-        print("---------------------------------------------------------------------------------------")
-    except:
-        print(uni[i])
-        f.write("\n\n")
+        print("Exception big : " + str(e))
+        f.write('A' + str(n) , str(count))
+        f.write('B' + str(n) , uni[i].replace("\n",""))
+        f.write('C' + str(n) , 'The page cannot be reach')
+        f.write('D' + str(n) , 'The page cannot be reach')
+        f.write('E' + str(n) , 'The page cannot be reach')
+        f.write('F' + str(n) , 'The page cannot be reach')
+        count += 1
+        n += 1
         print("The page cannot be reached")
         print("---------------------------------------------------------------------------------------")
-f.close()
+workbook.close()
