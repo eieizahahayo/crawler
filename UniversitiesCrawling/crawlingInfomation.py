@@ -92,9 +92,9 @@ n = 1
 count = 1
 for i in range(0,len(uni)):
     try:
+        initialization(n)
+        n += 1
         if(i%2 == 0):
-            initialization(n)
-            n += 1
             print("Enter if : " + uni[i])
             definitionWrite(uni[i],n)
         elif(i%2 == 1):
@@ -116,4 +116,5 @@ for i in range(0,len(uni)):
         n += 1
         print("The page cannot be reached")
         print("---------------------------------------------------------------------------------------")
+    n += 1
 workbook.close()

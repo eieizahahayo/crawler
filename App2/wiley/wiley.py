@@ -6,6 +6,18 @@ import datetime
 import re
 import xlsxwriter
 
+def checkCountry(text,country):
+    check = True
+    countryArr = ["Afghanistan", "Albania", "Algeria", "American Samoa", "Andorra", "Angola", "Anguilla", "Antarctica", "Antigua and Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia and Herzegowina", "Botswana", "Bouvet Island", "Brazil", "British Indian Ocean Territory", "Brunei Darussalam", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central African Republic", "Chad", "Chile", "China", "Christmas Island", "Cocos (Keeling) Islands", "Colombia", "Comoros", "Congo", "Congo, the Democratic Republic of the", "Cook Islands", "Costa Rica", "Cote d'Ivoire", "Croatia (Hrvatska)", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands (Malvinas)", "Faroe Islands", "Fiji", "Finland", "France", "France Metropolitan", "French Guiana", "French Polynesia", "French Southern Territories", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guadeloupe", "Guam", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Heard and Mc Donald Islands", "Holy See (Vatican City State)", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran (Islamic Republic of)", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Korea, Democratic People's Republic of", "Korea, Republic of", "Kuwait", "Kyrgyzstan", "Lao, People's Democratic Republic", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libyan Arab Jamahiriya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia, The Former Yugoslav Republic of", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Martinique", "Mauritania", "Mauritius", "Mayotte", "Mexico", "Micronesia, Federated States of", "Moldova, Republic of", "Monaco", "Mongolia", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Niue", "Norfolk Island", "Northern Mariana Islands", "Norway", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Pitcairn", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russian Federation", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Seychelles", "Sierra Leone", "Singapore", "Slovakia (Slovak Republic)", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Georgia and the South Sandwich Islands", "Spain", "Sri Lanka", "St. Helena", "St. Pierre and Miquelon", "Sudan", "Suriname", "Svalbard and Jan Mayen Islands", "Swaziland", "Sweden", "Switzerland", "Syrian Arab Republic","Syria", "Taiwan, Province of China", "Tajikistan", "Tanzania, United Republic of", "Thailand", "Togo", "Tokelau", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks and Caicos Islands", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom","England", "United States", "United States Minor Outlying Islands", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Virgin Islands (British)", "Virgin Islands (U.S.)", "Wallis and Futuna Islands", "Western Sahara", "Yemen", "Yugoslavia", "Zambia", "Zimbabwe"]
+    for each in countryArr:
+        match = re.search(each.lower() , text.lower())
+        if(match):
+            country.append(match.group(0))
+            check = False
+            print("found")
+    if(check):
+        country.append("Cannot match any country in the list")
+        print("not found")
 def contact(input,f,n):
     print("enter contact")
     headers = {
@@ -16,28 +28,30 @@ def contact(input,f,n):
     print(len(body))
     for i in range(len(body) // 2):
         email = []
+        country = []
+        affiliation = []
         #--------------Authors----------------------------------------------
         print("Author : " + body[i].a.span.text)
-        f.write('G' + str(n) , body[i].a.span.text)
+        f.write('H' + str(n) , body[i].a.span.text)
         try:
             add = body[i].find("div",{"class":"author-info accordion-tabbed__content"})
             try:
                 allP = add.findAll("p")
                 for each in allP:
                     print("Address : " + each.text)
-                    f.write('I' + str(n) , each.text)
-                    match = re.search("(( )*[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)", each.text)
+                    affiliation.append(each.text)
+                    match = re.search("(( )*[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+)", each.text)
                     if(match):
                         email.append(match.group(0))
                         print("Found email in author : " + match.group(0))
             except Exception as e:
-                print("Cannot get address")
-                f.write('I' + str(n) , "Cannot get affiliation")
+                print("Exception address1 : " + str(e))
+                f.write('K' + str(n) , "Cannot get affiliation")
         except Exception as e:
-            print("Exception address : " + str(e))
-            f.write('I' + str(n) , 'Cannot get affiliation')
+            print("Exception address2 : " + str(e))
+            f.write('K' + str(n) , 'Cannot get affiliation')
 
-        #--------------email----------------------------------------------
+        #--------------email 1----------------------------------------------
         print("Len email : " + str(len(email)))
         try:
             info = body[i].find("div",{"class":"bottom-info"})
@@ -49,25 +63,54 @@ def contact(input,f,n):
                 print("Email not match :" + info.text)
                 print("Email not match")
                 if(len(email) == 0):
-                    print("Enter if len(email) else")
-                    email.append("Cannot get email else")
+                    print("Enter if len(email)")
+                    email.append("Cannot get email")
         except Exception as e:
             print("Exception email : " + str(e))
             if(len(email) == 0):
-                print("Enter if len(email) exception")
-                email.append("Cannot get email except")
+                print("Enter if len(email)")
+                email.append("Cannot get email")
 
         if(len(email) == 0):
-            f.write('H' + str(n) , 'Cannot get email')
+            f.write('I' + str(n) , 'Cannot get email')
         else:
-            tempmail = set(email)
-            for each in tempmail:
-                f.write('H' + str(n) , each)
+            f.write('I' + str(n) , email[0])
+
+        #--------------email 2----------------------------------------------
+        try:
+            text = page.find("div",{"class":"article-header__correspondence-to"})
+            match = re.search(body[i].a.span.text, text.text)
+            if(match):
+                match = re.search("(( )*[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+)", text.text)
+                if(match):
+                    f.write('J' + str(n) , match.group(0))
+                else:
+                    f.write('J' + str(n) , 'Cannot get email')
+            else:
+                f.write('J' + str(n) , 'Cannot get email')
+        except Exception as e:
+            print("Exception email2 : " + str(e))
+            f.write('J' + str(n) , 'Cannot get email')
         print("-----------------------------------------")
-        n += 1
+        #--------------Country and affiliation----------------------------------------------
+        affiTemp = n
+        for each in affiliation:
+            f.write('K' + str(affiTemp) , each)
+            checkCountry(each,country)
+            affiTemp += 1
+        countryTemp = n
+        try:
+            for each in country:
+                f.write('L' + str(countryTemp) , each)
+                print("Country : " + each)
+                countryTemp += 1
+        except Exception as e:
+            print("Exception country : " + str(e))
+            # f.write('L' + str(n) , 'Cannot get country')
+        n += (affiTemp - n)
     return n
 
-#-------------------------------------------------arXiv------------------------------------------------------------------------------
+#-------------------------------------------------Wiley------------------------------------------------------------------------------
 def wiley(input):
     filename = "Wiley_" + input.replace(" ","_") + ".xlsx"
     filepath = "wiley/csv/" + filename
@@ -82,6 +125,19 @@ def wiley(input):
     f.write('B3', str(now.isoformat()))
     count = 1
     n = 4
+    f.write('A' + str(n) , 'S.No')
+    f.write('B' + str(n) , 'Website')
+    f.write('C' + str(n) , 'Title')
+    f.write('D' + str(n) , 'Journal name')
+    f.write('E' + str(n) , 'Volume')
+    f.write('F' + str(n) , 'Date')
+    f.write('G' + str(n) , 'Doi number')
+    f.write('H' + str(n) , 'Author name')
+    f.write('I' + str(n) , 'E-mail by method1')
+    f.write('J' + str(n) , 'E-mail by method2')
+    f.write('K' + str(n) , 'Affiliation')
+    f.write('L' + str(n) , 'Country')
+    n += 1
     for i in range(0,999999):
         print("Page : " + str(i))
         try:
@@ -105,52 +161,40 @@ def wiley(input):
                 doi = each.h2.span.a['href']
 
                 #-------------------Initialization--------------------------------------------------------
-                f.write('A' + str(n) , "https://nph.onlinelibrary.wiley.com" + link)
                 print("link : " + link)
-                n += 1
-                header = "S.No,Title,Journal name,Volume,Date,Keywords,Doi number,Author name,E-mail,Affiliation\n"
-                f.write('A' + str(n) , 'S.No')
-                f.write('B' + str(n) , 'Title')
-                f.write('C' + str(n) , 'Journal name')
-                f.write('D' + str(n) , 'Volume')
-                f.write('E' + str(n) , 'Date')
-                f.write('F' + str(n) , 'Doi number')
-                f.write('G' + str(n) , 'Author name')
-                f.write('H' + str(n) , 'E-mail')
-                f.write('I' + str(n) , 'Affiliation')
-                n += 1
                 f.write('A' + str(n) , str(count))
+                f.write('B' + str(n) , 'https://onlinelibrary.wiley.com' + link)
 
                 #--------------Title----------------------------------------------
                 print("Title : " + title)
-                f.write('B' + str(n) , title)
+                f.write('C' + str(n) , title)
 
                 #--------------Journal----------------------------------------------
                 journal = info.find("a",{"class":"meta__serial"}).text
                 print("Journal : " + journal)
-                f.write('C' + str(n) , journal)
+                f.write('D' + str(n) , journal)
                 try:
                     vol = info.find("a",{"class":"meta__volume"}).text
                     print("Volume : " + vol)
-                    f.write('D' + str(n) , vol)
+                    f.write('E' + str(n) , vol)
                 except Exception as e:
                     print("Exception volume : " + str(e))
-                    f.write('D' + str(n) , 'Cannot get volume')
+                    f.write('E' + str(n) , 'Cannot get volume')
                 #--------------Date----------------------------------------------
                 try:
                     print("Date : " + date)
-                    f.write('E' + str(n) , date)
+                    f.write('F' + str(n) , date)
                 except Exception as e:
                     print("Exception date : " + str(e))
-                    f.write('E' + str(n) , 'Cannot get date')
+                    f.write('F' + str(n) , 'Cannot get date')
 
                 #--------------Doi----------------------------------------------
                 try:
                     print("Doi : https://nph.onlinelibrary.wiley.com" + doi)
-                    f.write('F' + str(n) , 'https://nph.onlinelibrary.wiley.com' + doi)
+                    f.write('G' + str(n) , 'https://nph.onlinelibrary.wiley.com' + doi)
                 except Exception as e:
                     print("Exception doi : " + str(e))
-                    f.write('F' + str(n) , 'Cannot get doi')
+                    f.write('G' + str(n) , 'Cannot get doi')
 
                 #--------------Authors and email----------------------------------------------
                 parse = "https://nph.onlinelibrary.wiley.com" + doi
@@ -162,7 +206,7 @@ def wiley(input):
             if(stop):
                 break
         except Exception as e:
-                print("Exception : " + str(e))
+                print("Exception big : " + str(e))
                 print("Page : " + str(i))
                 break
     print("Jimmy")
