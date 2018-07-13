@@ -12,29 +12,37 @@ from sagepub.sagepub import *
 from researchgate.researchgate import *
 from europePMC.europePMC import *
 
-print('[1] : arXiv\n[2] : ScienceDirect\n[3] : Wiley\n[4] : Springer\n[5] : Sagepub\n[6] : Research gate\n[7] : Europe PMC\n[8] : ACS')
+print('[1] : Wiley\n[2] : Springer\n[3] : Europe PMC\n[4] : ScienceDirect\n[5] : arXiv\n[6] : ACS')
 choice = input("Enter your choice : ")
 if(choice == "1"):
     key = input('Enter the keyword : ')
-    arXiv(key)
+    name = input("Enter file name : ")
+    wiley(key,name)
 elif(choice == "2"):
     key = input('Enter the keyword : ')
-    scienceDirect(key)
+    name = input("Enter file name : ")
+    springer(key,name)
 elif(choice == "3"):
     key = input("Enter the keyword : ")
-    wiley(key)
+    name = input("Enter file name : ")
+    pmc(key,name)
 elif(choice == "4"):
     key = input("Enter the keyword : ")
-    springer(key)
+    name = input("Enter file name : ")
+    scienceDirect(key,name)
+# elif(choice == "5"):
+#     key = input("Enter the keyword : ")
+#     name = input("Enter file name : ")
+#     sage(key,name)
+# elif(choice == "6"):
+#     key = input("Enter the keyword : ")
+#     name = input("Enter file name : ")
+#     gate(key,name)
 elif(choice == "5"):
     key = input("Enter the keyword : ")
-    sage(key)
+    name = input("Enter file name : ")
+    arXiv(key,name)
 elif(choice == "6"):
     key = input("Enter the keyword : ")
-    gate(key)
-elif(choice == "7"):
-    key = input("Enter the keyword : ")
-    pmc(key)
-elif(choice == "8"):
-    key = input("Enter the keyword : ")
-    acs(key)
+    name = input("Enter file name : ")
+    acs(key,name)

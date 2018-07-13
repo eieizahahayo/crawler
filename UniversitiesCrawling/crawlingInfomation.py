@@ -90,10 +90,10 @@ workbook = xlsxwriter.Workbook(filename)
 f = workbook.add_worksheet()
 n = 1
 count = 1
+initialization(n)
+n += 1
 for i in range(0,len(uni)):
     try:
-        initialization(n)
-        n += 1
         if(i%2 == 0):
             print("Enter if : " + uni[i])
             definitionWrite(uni[i],n)
@@ -102,6 +102,7 @@ for i in range(0,len(uni)):
             n = crawInfo(uni[i].replace("\n",""),f,n,count)
             count += 1
             print("Success")
+            n += 1
             print("---------------------------------------------------------------------------------------")
     except Exception as e:
         print(uni[i])
@@ -116,5 +117,4 @@ for i in range(0,len(uni)):
         n += 1
         print("The page cannot be reached")
         print("---------------------------------------------------------------------------------------")
-    n += 1
 workbook.close()

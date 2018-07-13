@@ -14,9 +14,8 @@ def replace_all(text, wordDict):
 
 
 #-------------------------------------------------arXiv------------------------------------------------------------------------------
-def arXiv(input):
-
-    filename = "arxiv_" + input.replace(" ","_") + ".xlsx"
+def arXiv(input,name):
+    filename = "arxiv_" + name + ".xlsx"
     filepath = "arxiv/csv/" + filename
     now = datetime.datetime.now()
     workbook = xlsxwriter.Workbook(filepath)

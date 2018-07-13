@@ -39,9 +39,9 @@ def crawInfo(input,f,count,n):
 
 
 #-------------------------------------------------------------------------------------------------------------------------------
-def acs(input):
+def acs(input,name):
     now = datetime.datetime.now()
-    filename = "ACS_" + input.replace(" ","_") + ".xlsx"
+    filename = "ACS_" + name + ".xlsx"
     filepath = "acs/csv/" + filename
     workbook = xlsxwriter.Workbook(filepath)
     f = workbook.add_worksheet()
