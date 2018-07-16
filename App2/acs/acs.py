@@ -4,6 +4,7 @@ import xlsxwriter
 from urllib.request import urlopen as uReq
 from bs4 import BeautifulSoup as soup
 import datetime
+import time
 
 def crawInfo(input,f,count,n):
     headers = {

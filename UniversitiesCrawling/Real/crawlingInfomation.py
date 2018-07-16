@@ -20,7 +20,7 @@ def definitionWrite(input,n):
     f.write('C' + str(n) , input)
 
 def crawInfo(url,f,n,count):
-    response = requests.get(url, headers={'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36'})
+    response = requests.get(url, headers={'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36'}, timeout = 60)
     page_soup = soup(response.content, "html5lib")
     body = page_soup.find("body")
     divBody = body.findAll(text=True)
@@ -81,23 +81,28 @@ def crawInfo(url,f,n,count):
     return n
 
 #--------------------------main-----------------------------------------------------------------------
-with open("list.txt", "r") as ins:
+name = input("Enter name : ")
+file = input("Enter file name : ")
+with open( file , "r") as ins:
     uni = []
     for line in ins:
         uni.append(line)
-filename = "contact_India.xlsx"
-workbook = xlsxwriter.Workbook(filename)
+filename = "contact_" + name + ".xlsx"
+filepath = "xlsx/" + filename
+workbook = xlsxwriter.Workbook(filepath)
 f = workbook.add_worksheet()
 n = 1
 count = 1
+f.write('A' + str(n) , uni[0])
+n += 1
 initialization(n)
 n += 1
-for i in range(0,len(uni)):
+for i in range(1,len(uni)):
     try:
-        if(i%2 == 0):
+        if(i%2 == 1):
             print("Enter if : " + uni[i])
             definitionWrite(uni[i],n)
-        elif(i%2 == 1):
+        elif(i%2 == 0):
             print("Enter else : " + uni[i])
             n = crawInfo(uni[i].replace("\n",""),f,n,count)
             count += 1

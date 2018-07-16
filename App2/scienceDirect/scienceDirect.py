@@ -168,12 +168,13 @@ def crawInfoScienceDirect(input,f,count,n):
                             break
                         doi = body.find("a",ele)
                         print(doi.text)
+                        f.write('G' + str(n) , doi.text)
                         done = True
                     except:
                         continue
                 if(done == False):
                     print("Cannot get DOI")
-                    doi = "Cannot get DOI"
+                    f.write('G' + str(n) , 'Cannot get DOI')
                 #-------------------------------------------------------------
         except Exception as e:
             continue
@@ -189,17 +190,24 @@ def crawInfoScienceDirect(input,f,count,n):
                     break
                 doi = body.find("a",ele)
                 print(doi.text)
+                f.write('G' + str(n) , doi.text)
                 done = True
             except Exception as e:
                 print("except : " + str(e))
                 continue
         if(done == False):
             print("Cannot get DOI")
-            doi = "Cannot get doi"
+            f.write('G' + str(n) , 'Cannot get DOI')
         #-------------------------------------------------------------
-        f.write('G' + str(n) , doi)
         for each in kwAns:
             f.write('F' + str(n) , each)
             n += 1
+    else:
+        try:
+            for each in kwAns:
+                f.write('F' + str(n) , each)
+                n += 1
+        except Exception as e:
+            print("Exception kw : " + str(e))
     print("-----------------------------------------------------------------")
     return n
