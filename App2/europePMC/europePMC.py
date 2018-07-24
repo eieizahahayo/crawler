@@ -128,11 +128,15 @@ def pmc(input,name):
             link = []
             headers = {
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'}
+            # my_url = 'https://europepmc.org/search?query=climate&page=1'
             my_url = 'https://europepmc.org/search?query=' + input.replace(" ","+") + '&page=' + str(i)
             response = requests.get(my_url, headers=headers)
             page = soup(response.content, "html5lib")
             body = page.findAll("a",{"class":"resultLink linkToAbstract"})
             print("---------------------------------------------------------------")
+            print("Input : " + input)
+            print("real : https://europepmc.org/search?query=climate&page=1")
+            print("URL : " + my_url)
             print(len(body))
             for each in body:
                 link.append("https://europepmc.org" + each['href'].replace(".",""))
