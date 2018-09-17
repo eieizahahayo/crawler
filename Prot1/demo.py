@@ -5,7 +5,7 @@ import requests
 import json
 import re
 
-my_url = 'https://www.sciencedirect.com/science/article/pii/S1871678416325687'
+my_url = 'https://www.sciencedirect.com/science/article/pii/S0263822318304100#!'
 headers = {
     'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'}
 response = requests.get(my_url, headers=headers)
@@ -16,11 +16,14 @@ data = json.loads(emails.text) #a dictionary!
 ans = json.dumps(data,indent=3)
 
 
+authors = []
+affs = []
+
 content = data.get('authors').get('content')
 for i in range(0, len(content)):
     card = content[i].get('$$')
-    # fucker = json.dumps(card,indent=3)
-    # print(fucker)
+    fucker = json.dumps(card,indent=3)
+    print(fucker)
     for j in range(0, len(counter)):
         outer = card[j].get('$$')
         outer2 = json.dumps(outer,indent=3)
@@ -36,6 +39,9 @@ for i in range(0, len(content)):
                 print("Email : " + email)
             except Exception as e:
                 print("Cannot get email")
+        else:
+            email = "None"
+            print("Email : " + email)
         try:
             temp = outer[2].get("$$")
             id = temp[0].get("_")
@@ -43,10 +49,10 @@ for i in range(0, len(content)):
         except Exception as e:
             id = "not-match"
             print("Exception : " + str(e))
+        authors.append({"name" : realname,"email" : email, "id" : id})
         print("---------------------------------------------------------------")
 
     print("*****************************************************************************************")
-
     for j in range(len(counter),len(card)-1):
         try:
             outer = card[j].get('$$')
@@ -75,36 +81,33 @@ for i in range(0, len(content)):
                 print("Id : " + id)
                 print("Affiliation : " + str(affi))
                 print("Country : " + country)
+                if str(affi).lower() == 'none':
+                    temp = outer[1].get("$$")
+                    affi = temp[0].get("_")
                 print("---------------------------------------------------------------")
+            affs.append({"affi" : affi , "country" : country , "id" : id })
         except Exception as e:
             print("Exception : " + str(e))
             
     print("================================================================")
 
 
+for ele in authors:
+    for ele2 in affs:
+        if(ele['id'] == ele2['id']):
+           print("-------------------------------------------")
+           print("Name : " + ele['name'])
+           print("Email : " + str(ele['email']))
+           print("Affiliation : " + str(ele2['affi']))
+           print("Country : " + ele2['country'])
+           print("Id : " + ele['id'] + " = " + ele2['id'])
+           print("-------------------------------------------")
+        # else:
+        #    print("-------------------------------------------")
+        #    print("Name : " + ele['name'])
+        #    print("Email : " + ele['email'])
+        #    print("Affiliation : Cannot")
+        #    print("Country : Cannot")
+        #    print("-------------------------------------------")
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# authors = page.findAll("span",{"class":"content"})
-# for ele in authors:
-#     temp = ele.findAll("span")
-#     name = temp[0].text
-#     surname = temp[1].text
-#     print(name + " " + surname)
